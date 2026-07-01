@@ -13,15 +13,23 @@
 }
 
 main {
-    background-color: var(--background-color, black);
+    background-color: var(--background-color);
     width: 100vw;
     height: 100vh;
+}
+
+#game-container {
+    width: 100vw;
+    margin: 40px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    gap: 20px;
     align-items: center;
 }
 
+
+/* #region: select-gamemode-container */
 #screen-overlay {
     position: absolute;
     inset: 0;
@@ -42,7 +50,8 @@ main {
     border-radius: 20px;
     margin: auto;
 
-    background-color: yellow;
+    background-color: var(--color-2);
+    color: var(--background-color);
 
     display: flex;
     flex-direction: column;
@@ -52,6 +61,7 @@ main {
 #mode-selecter {
     display: flex;
     flex-direction: row;
+    gap: 20px;
     align-items: center;
     justify-content: space-evenly;
 }
@@ -59,20 +69,47 @@ main {
 #mode-selecter button {
     width: 15vw;
     height: 15vw;
+    background-color: var(--background-color);
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
     overflow-y: hidden;
+    transition: all 0.3s ease;
+}
+#mode-selecter button:hover {
+    transform: scale(1.03);
+    background-color: var(--color-1);
 }
 
 #mode-selecter button img {
     object-fit: fill;
 }
 
+/* #endregion */
+
+h1 {
+    padding-top: 20px;
+    text-align: center;
+}
+
+#scoreboard {
+    width: 40%;
+    display: grid;
+    grid-template-columns:  repeat(2, 1fr);
+    gap: 5%;
+    justify-items: center;
+}
+
+
 #minigame-container {
-    background-color: greenyellow;
+    background-color: var(--color-1);
     width: 80vw;
-    height: 80vh;
+    height: 60vh;
 
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    gap: 20px;
     align-items: center;
 }
 
@@ -83,3 +120,39 @@ main {
     text-align: center;
     cursor: default;
 }
+
+/* #region: two-player-stats */
+#winner-dialog {
+    width: fit-content;
+    height: fit-content;
+    padding: 40px 50px;
+    border-radius: 20px;
+    margin: auto;
+    position: relative;
+
+    background-color: var(--color-2);
+    color: var(--background-color);
+
+    display: none;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#winner-dialog button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 3px;
+    border-radius: 0 20px 0 10px;
+    font-size: 1.3rem;
+    cursor: pointer
+}
+
+#stats {
+    width: 100%;
+    display: grid;
+    grid-template-columns:  repeat(2, 1fr);
+    gap: 5%;
+    justify-items: center;
+}
+/* #endregion */

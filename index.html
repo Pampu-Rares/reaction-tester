@@ -8,6 +8,7 @@
 </head>
 <body>
     <main>
+        <h1>Reaction tester</h1>
         <div id="screen-overlay">
             <div id="mode-selecter-container">
                 <h2>Select gamemode</h2>
@@ -16,10 +17,20 @@
                     <button id="2-player"><img src="./media/2-player.svg"></button>
                 </div>
             </div>
+            <div id="winner-dialog">
+            </div>
         </div>
-        <p>Player <span id="player">1</span></p>
-        <div id="minigame-container">
-            <p id="info-span">Press to play</p>
+        <div id="game-container">
+            <div id="scoreboard">
+                <p>Best attempt:</p>
+                <span id="best-attempt"></span>
+                <p>Last attempt:</p>
+                <span id="current-attempt"></span>
+            </div>
+            <div id="minigame-container">
+                <p id="player"></p>
+                <p id="info-span">Press to play</p>
+            </div>
         </div>
     </main>
     <script src="script.js"></script>
