@@ -26,7 +26,7 @@ function singlePlayerMode() {
         minigameArea.style.color = 'white'
         roundStarted = true
         doNotPress = true
-        const timeToWait = (Math.random() * 2000) + 1
+        const timeToWait = (Math.random() * 5000) + 2001
         waitingInterval = setTimeout(() => {
             minigameArea.style.backgroundColor = 'var(--color-1)'
             minigameArea.style.color = 'black'
@@ -42,6 +42,7 @@ function singlePlayerMode() {
             minigameArea.style.color = 'black'
             infoSpan.innerText = 'Click'
             doNotPress = false
+            roundStarted = false
         }, 2000)
         clearTimeout(waitingInterval)
     }
@@ -50,6 +51,7 @@ function singlePlayerMode() {
         timeInterval = (endTime - startTime).toPrecision(3) / 1000
         infoSpan.innerText = timeInterval + ' seconds. Click again when ready'
         currentAttemptSpan.innerText = timeInterval
+        console.log(bestAttemptSpan.innerText, Number(bestAttemptSpan.innerText))
         if(bestAttemptSpan.innerText === '' || Number(bestAttemptSpan.innerText) > timeInterval)
             bestAttemptSpan.innerText = timeInterval
         roundStarted = false
@@ -69,11 +71,11 @@ function showWinner() {
     winnerDialog.style.display = 'flex'
     winnerDialog.innerHTML = `
         <button id="close" onClick="closePopup()">X</button>
-        <h2>${playerOneInterval == playerTwoInterval || !playerOneInterval && !playerTwoInterval ? 'No one' : playerOneInterval < playerTwoInterval || !playerTwoInterval ? 'Player 1' : 'Player 2'} wins!</h2>
+        <h2 style="color: white;">${playerOneInterval == playerTwoInterval || !playerOneInterval && !playerTwoInterval ? 'No one' : playerOneInterval < playerTwoInterval || !playerTwoInterval ? 'Player 1' : 'Player 2'} wins!</h2>
         <div id="stats">
-            <p>Player 1</p>
+            <p style="${playerOneInterval <= playerTwoInterval || !playerTwoInterval ? 'color: white;' : ''}">Player 1</p>
             <p style="${playerOneInterval <= playerTwoInterval || !playerTwoInterval ? 'color: white;' : ''}">${playerOneInterval}</p>
-            <p>Player 2</p>
+            <p style="${playerOneInterval >= playerTwoInterval || !playerOneInterval ? 'color: white;' : ''}">Player 2</p>
             <p style="${playerOneInterval >= playerTwoInterval || !playerOneInterval ? 'color: white;' : ''}">${playerTwoInterval}</p>
         </div>
     `
@@ -94,7 +96,7 @@ function twoPlayerMode() {
         minigameArea.style.color = 'white'
         roundStarted = true
         doNotPress = true
-        const timeToWait = (Math.random() * 2000) + 1
+        const timeToWait = (Math.random() * 5000) + 2001
         waitingInterval = setTimeout(() => {
             minigameArea.style.backgroundColor = 'var(--color-1)'
             minigameArea.style.color = 'black'
@@ -113,7 +115,11 @@ function twoPlayerMode() {
             roundStarted = false
         }, 2000)
         clearTimeout(waitingInterval)
-        if(playsCount == 3) playerTurn.innerText = "It is now player 2's turn"
+        if(playsCount == 3) {
+            bestAttemptSpan.innerText = ''
+            currentAttemptSpan.innerText = ''
+            playerTurn.innerText = "It is now player 2's turn"
+        }
         else if(playsCount == 6) showWinner()
     }
     else {
@@ -127,7 +133,11 @@ function twoPlayerMode() {
             if(playsCount <=3) playerOneInterval = timeInterval
             else playerTwoInterval = timeInterval
         }
-        if(playsCount == 3) playerTurn.innerText = "It is now player 2's turn"
+        if(playsCount == 3) {
+            bestAttemptSpan.innerText = ''
+            currentAttemptSpan.innerText = ''
+            playerTurn.innerText = "It is now player 2's turn"
+        }
         else if(playsCount == 6) showWinner()
     }
 }
