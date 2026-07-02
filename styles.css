@@ -37,6 +37,8 @@ button {
     position: absolute;
     top: 0;
     font-size: 0.7rem;
+    border-top: none;
+    border-bottom: var(--color-2) solid 5px;
     background-color: var(--color-1);
 }
 
@@ -46,14 +48,18 @@ button {
 
 #change-gamemode {
     border-right: var(--color-2) solid 5px;
-    border-bottom: var(--color-2) solid 5px;
+    border-left: none;
     border-radius: 0 0 20px 0;
+    width: clamp(20px, 10vw, 30px);
+    height: clamp(17px, 8vw, 27px);
+    overflow-y: hidden;
+    padding: 2px;
 }
 
 #select-mode {
     right: 0;
     border-left: var(--color-2) solid 5px;
-    border-bottom: var(--color-2) solid 5px;
+    border-right: none;
     border-radius: 0 0 0 20px;
 }
 
@@ -71,7 +77,7 @@ button {
     transition: opacity 0.3s ease;
 }
 
-#mode-selecter-container {
+#mode-selector-container {
     width: fit-content;
     height: fit-content;
     padding: 20px;
@@ -86,7 +92,7 @@ button {
     gap: 20px;
 }
 
-#mode-selecter {
+#mode-selector {
     display: flex;
     flex-direction: row;
     gap: 20px;
@@ -94,9 +100,9 @@ button {
     justify-content: space-evenly;
 }
 
-#mode-selecter button {
-    width: 15vw;
-    height: 15vw;
+#mode-selector button {
+    width: clamp(20px, 20vw, 150px);
+    height: clamp(20px, 20vw, 150px);
     background-color: var(--background-color);
     border: none;
     border-radius: 20px;
@@ -104,19 +110,23 @@ button {
     overflow-y: hidden;
     transition: all 0.3s ease;
 }
-#mode-selecter button:hover {
+#mode-selector button:hover {
     transform: scale(1.03);
     background-color: var(--color-1);
 }
 
-#mode-selecter button img {
+#mode-selector button img {
     object-fit: fill;
 }
 
 /* #endregion */
 
 h1 {
-    padding-top: 20px;
+    padding-top: 40px;
+    font-size: 1.3rem;
+}
+
+h1, h2 {
     text-align: center;
 }
 
