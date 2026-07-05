@@ -1,5 +1,11 @@
 
-#game-container {
+main {
+    display: flex;
+    flex-direction: column;
+}
+
+#app-container {
+    flex: 1;
     margin: 40px;
     display: flex;
     flex-direction: column;
@@ -22,6 +28,7 @@
 }
 
 #change-gamemode {
+    z-index: 2;
     border-right: var(--color-2) solid 5px;
     border-left: none;
     border-radius: 0 0 20px 0;
@@ -97,10 +104,10 @@
 /* #endregion */
 
 #scoreboard {
-    width: clamp(30px, 80vw, 400px);
+    width: clamp(30px, 80vw, 330px);
     font-size: 0.8rem;
     display: grid;
-    grid-template-columns:  repeat(2, 1fr);
+    grid-template-columns:  2fr 1fr;
     gap: 5%;
     justify-items: center;
 }
@@ -108,8 +115,9 @@
 
 #minigame-container {
     background-color: var(--color-1);
-    width: 80vw;
-    height: 60vh;
+    width: clamp(50px, 80vw, 650px);
+    height: clamp(100px, 60vh, 325px);
+    border-radius: 20px;
 
     display: flex;
     flex-direction: column;
@@ -128,6 +136,25 @@
 }
 
 /* #region: two-player-stats */
+
+#players-scores {
+    display: none;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    justify-items: center;
+}
+
+hr {
+    width: 100%;
+    display: inline-block;
+    grid-column: 1/-1;
+    height: 5px;
+    background-color: black;
+    border: none;
+    border-radius: 20px;
+}
+
+
 #winner-dialog {
     width: fit-content;
     height: fit-content;

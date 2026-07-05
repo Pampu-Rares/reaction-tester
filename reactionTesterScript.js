@@ -16,7 +16,11 @@ const winnerDialog = document.getElementById("winner-dialog")
 
 const changeGamemodeBtn = document.getElementById("change-gamemode")
 
-let roundStarted = false, doNotPress = false
+const playersScores = document.getElementById("players-scores");
+const playerOneScore = document.getElementById("player-1-score");
+const playerTwoScore = document.getElementById("player-2-score");
+
+let roundStarted = false, doNotPress = false, isResetting = false
 let waitingInterval
 let startTime, endTime
 let player = 1, playerOneWins = 0, playerOneInterval, playerTwoWins = 0, playerTwoInterval, playsCount = 0
@@ -38,6 +42,7 @@ function singlePlayerMode() {
         }, timeToWait)
     }
     else if(doNotPress) {
+        isResetting = true
         infoSpan.innerText = 'You pressed too soon'
         currentAttemptSpan.innerText = 'early'
         setTimeout(() => {
@@ -46,6 +51,7 @@ function singlePlayerMode() {
             infoSpan.innerText = 'Click'
             doNotPress = false
             roundStarted = false
+            isResetting = false
         }, 2000)
         clearTimeout(waitingInterval)
     }
@@ -72,6 +78,8 @@ function closePopup() {
     minigameArea.style.backgroundColor = 'var(--color-1)'
     minigameArea.style.color = 'black'
     infoSpan.innerText = 'Press to play'
+    playerOneScore.innerText = ''
+    playerTwoScore.innerText = ''
     setTimeout(() => {
         winnerDialog.style.display = 'none'
     }, 301)
@@ -121,6 +129,7 @@ function twoPlayerMode() {
         }, timeToWait)
     }
     else if(doNotPress) {
+        isResetting = true
         infoSpan.innerText = 'You pressed too soon'
         currentAttemptSpan.innerText = 'early'
         setTimeout(() => {
@@ -129,6 +138,7 @@ function twoPlayerMode() {
             infoSpan.innerText = 'Click'
             doNotPress = false
             roundStarted = false
+            isResetting = false
         }, 2000)
         clearTimeout(waitingInterval)
         if(playsCount == 3)
@@ -143,8 +153,14 @@ function twoPlayerMode() {
         currentAttemptSpan.innerText = timeInterval
         if(bestAttemptSpan.innerText === '' || Number(bestAttemptSpan.innerText) > timeInterval) {
             bestAttemptSpan.innerText = timeInterval
-            if(playsCount <=3) playerOneInterval = timeInterval
-            else playerTwoInterval = timeInterval
+            if(playsCount <=3) {
+                playerOneInterval = timeInterval
+                playerOneScore.innerText = timeInterval
+            } 
+            else {
+                playerTwoInterval = timeInterval
+                playerTwoScore.innerText = timeInterval
+            } 
         }
         if(playsCount == 3)
             playerTurn.innerText = "It is now player 2's turn"
@@ -153,8 +169,10 @@ function twoPlayerMode() {
 }
 
 minigameArea.addEventListener("click", () => {
-    if(!singlePlayer) twoPlayerMode()
-        else singlePlayerMode()
+    if(!isResetting) {
+        if(!singlePlayer) twoPlayerMode()
+            else singlePlayerMode()
+    }
 })
 
 window.addEventListener("keydown", (e) => {
@@ -173,6 +191,7 @@ singlePlayerBtn.addEventListener("click", () => {
     setTimeout(() => {
         modeSelector.style.display = 'none'
     }, 301)
+    playersScores.style.display = 'none'
     singlePlayer = true
     roundStarted = false
     doNotPress = false
@@ -187,6 +206,7 @@ twoPlayerBtn.addEventListener("click", () => {
     setTimeout(() => {
         modeSelector.style.display = 'none'
     }, 301)
+    playersScores.style.display = 'grid'
     singlePlayer = false
     bestAttemptSpan.innerText = ''
     currentAttemptSpan.innerText = ''
