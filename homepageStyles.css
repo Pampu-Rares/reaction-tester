@@ -1,0 +1,64 @@
+h1 {
+    font-size: 1.3rem;
+}
+
+button {
+    font-size: 0.7rem;
+    border: var(--color-2) solid 5px;
+    border-radius: 20px;
+    background-color: var(--color-1);
+    padding: 15px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: white;
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+}
+
+#minigames-collection {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    flex: 1;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.minigame {
+    background-color: var(--color-2);
+    width: clamp(275px, 80vw, 400px);
+    padding: 20px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    transition: all 0.3s ease;
+}
+
+.minigame:hover {
+    transform: scale(1.1);
+}
+
+.preview-container {
+    width: 80%;
+}
+
+.preview {
+    width: 100%;
+    object-fit: contain;
+    border-radius: 20px;
+}
+
+@media (min-width: 1028px) {
+    #minigames-collection {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+}
