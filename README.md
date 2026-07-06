@@ -3,6 +3,8 @@ A webpage that tests your reaction time through various minigames
 
 ![A depiction of how one of the minigames looks](./media/readme_thumbnails/reactionTesterPrev.png)
 
+You can try this webpage for yourself [here](https://pampu-rares.github.io/reaction-tester/).
+
 ## Getting Started
 
 ### Installation
