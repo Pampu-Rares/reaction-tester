@@ -27,7 +27,7 @@ let player = 1, playerOneWins = 0, playerOneInterval, playerTwoWins = 0, playerT
 
 function singlePlayerMode() {
     if(!roundStarted) {
-        infoSpan.innerText = 'Click when the color turns blue'
+        infoSpan.innerText = 'Click when the color turns green'
         minigameArea.style.backgroundColor = 'red'
         minigameArea.style.color = 'white'
         roundStarted = true
@@ -114,7 +114,7 @@ function twoPlayerMode() {
             bestAttemptSpan.innerText = ''
             currentAttemptSpan.innerText = ''
         }
-        infoSpan.innerText = 'Click when the color turns blue'
+        infoSpan.innerText = 'Click when the color turns green'
         minigameArea.style.backgroundColor = 'red'
         minigameArea.style.color = 'white'
         roundStarted = true

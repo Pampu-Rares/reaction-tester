@@ -1,0 +1,118 @@
+
+
+#scoreboard {
+    width: clamp(30px, 80vw, 330px);
+    font-size: 0.8rem;
+    display: grid;
+    grid-template-columns:  2fr 1fr;
+    gap: 5%;
+    justify-items: center;
+}
+
+
+#minigame-container {
+    background-color: var(--color-1);
+    width: clamp(50px, 80vw, 650px);
+    height: clamp(100px, 60vh, 325px);
+    border-radius: 20px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    align-items: center;
+}
+
+#play-btn {
+    padding: 15px;
+    border-radius: 20px;
+    background-color: var(--color-2);
+    font-size: 1rem;
+}
+
+#play-btn:hover {
+    background-color: white;
+    transform: scale(1.05);
+}
+
+#target {
+    background: none;
+    border: none;
+    padding: none;
+    display: none;
+}
+
+#target img {
+    width: 100%;
+    object-fit: cover;
+}
+
+.easy-difficulty {
+    width: 200px;
+    height: 200px;
+}
+
+.hidden {
+    opacity: 0;
+}
+
+/* #region: two-player-stats */
+
+#players-scores {
+    display: none;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    justify-items: center;
+}
+
+hr {
+    width: 100%;
+    display: inline-block;
+    grid-column: 1/-1;
+    height: 5px;
+    background-color: black;
+    border: none;
+    border-radius: 20px;
+}
+
+
+#winner-dialog {
+    width: fit-content;
+    height: fit-content;
+    padding: 40px 50px;
+    border-radius: 20px;
+    margin: auto;
+    position: relative;
+
+    background-color: var(--color-2);
+    color: var(--background-color);
+
+    display: none;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 3px;
+    border-radius: 0 20px 0 10px;
+    font-size: 1.3rem;
+    background-color: var(--color-1);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#close:hover {
+    background-color: white;
+}
+
+#stats {
+    width: 100%;
+    display: grid;
+    grid-template-columns:  repeat(2, 1fr);
+    gap: 5%;
+    justify-items: center;
+}
+/* #endregion */

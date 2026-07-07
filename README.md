@@ -32,6 +32,8 @@ The main page displays a list of all of the available minigames. Currently, ther
 This is the best and most straightforward way to test your reaction time.
 All you have to do is click in the blue rectangle and follow the instructions written there.
 
+- You can also press the Spacebar instead of clicking the blue area
+
 ![Reaction Time Minigame](./media/readme_thumbnails/reactionTesterPrev.png)
 
 ## License
