@@ -19,7 +19,8 @@ button:hover {
 #minigames-collection {
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: center;
+    gap: 40px;  
     align-items: center;
     flex: 1;
     padding: 20px;

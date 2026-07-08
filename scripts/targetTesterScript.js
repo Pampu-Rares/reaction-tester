@@ -10,7 +10,7 @@ const selectModeBtn = document.getElementById("select-mode")
 const changeGamemodeBtn = document.getElementById("change-gamemode")
 
 const targetsMissedSpan = document.getElementById("targets-missed")
-const reactionTimeSpan = document.getElementById("reaction-time")
+const targetsHitSpan = document.getElementById("targets-hit")
 
 const winnerDialog = document.getElementById("winner-dialog")
 
@@ -18,30 +18,75 @@ const playersScores = document.getElementById("players-scores");
 const playerOneScore = document.getElementById("player-1-score");
 const playerTwoScore = document.getElementById("player-2-score");
 
-let roundStarted = false, isResetting = false
-let waitingInterval
-let startTime, endTime
-let player = 1, playerOneWins = 0, playerOneInterval, playerTwoWins = 0, playerTwoInterval, playsCount = 0
+const playBtn = document.getElementById("play-btn")
+const target = document.getElementById("target")
 
-function singlePlayerMode() {
+let roundStarted = false, isResetting = false, singlePlayer = true, noLatency = true
+let playsCount = 0
+let startTime, endTime
+let player = 1, playerOneWins = 0, playerOneInterval, playerTwoWins = 0, playerTwoInterval
+
+
+function endRound() {
+    endTime = performance.now()
+    roundStarted = false
+    playsCount = 0
+    target.style.display = 'none'
+    winnerDialog.style.display = 'flex'
+    winnerDialog.innerHTML = `
+        <button id="close" onClick="closePopup()">X</button>
+        <h2 style="color: black;">See your stats</h2>
+        <div id="stats">
+            <p style="color: black;">Total time:</p>
+            <p style="">${((endTime - startTime) / 1000).toFixed(3)}s</p>
+            <p style="color: black;">Targets Missed:</p>
+            <p style="">${String(targetsMissedSpan.innerText)}</p>
+        </div>
+    `
+    screenOverlay.style.opacity = '1'
+    screenOverlay.style.pointerEvents = 'auto'
+    playBtn.style.display = 'inline-block' // it may be block
+}
+
+function singlePlayerMode(missed = false) {
+    if(missed) {
+        targetsMissedSpan.innerText = String(Number(targetsMissedSpan.innerText) + 1)
+        minigameArea.style.backgroundColor = 'Red'
+        setTimeout(() => {
+            minigameArea.style.backgroundColor = 'var(--color-1)'
+        },300)
+    }
+    else {
+        targetsHitSpan.innerText = String(Number(targetsHitSpan.innerText.split('/')[0]) + 1) + '/20'
+    }
+    playsCount++;
+    console.log(playsCount)
+    if(playsCount == 20) endRound()
+    else if(noLatency) {
+        const heightMultiplier = Math.random() * (minigameArea.offsetHeight - target.offsetHeight)
+        const widthMultiplier = Math.random() * (minigameArea.offsetWidth - target.offsetWidth)
+        target.style.top = String(heightMultiplier) + 'px'
+        target.style.left = String(widthMultiplier) + 'px'
+    } else {
+        // add latency option
+    }
 }
 
 function closePopup() {
-    screenOverlay.style.opacity = '1'
+    screenOverlay.style.opacity = '0'
     screenOverlay.style.pointerEvents = 'none'
-    playerTurn.innerText = 'Player 1'
-    playsCount = 0
-    doNotPress = false
-    roundStarted = false
-    playerOneInterval = undefined
-    playerTwoInterval = undefined
-    minigameArea.style.backgroundColor = 'var(--color-1)'
-    minigameArea.style.color = 'black'
-    infoSpan.innerText = 'Press to play'
-    playerOneScore.innerText = ''
-    playerTwoScore.innerText = ''
+    if(!singlePlayer) {
+        playerTurn.innerText = 'Player 1'
+        playerOneInterval = undefined
+        playerTwoInterval = undefined
+        playerOneScore.innerText = ''
+        playerTwoScore.innerText = ''
+    }
+    targetsMissedSpan.innerText = '0'
+    targetsHitSpan.innerText = '0/10'
     setTimeout(() => {
         winnerDialog.style.display = 'none'
+        screenOverlay.style.display = 'none'
     }, 301)
 }
 
@@ -85,18 +130,17 @@ function resetGame() {
 }
 
 minigameArea.addEventListener("click", () => {
-    if(!singlePlayer) twoPlayerMode()
-        else singlePlayerMode()
+    if(roundStarted) {
+        if(!singlePlayer) twoPlayerMode(true)
+            else singlePlayerMode(true)
+    }
 })
 
 singlePlayerBtn.addEventListener("click", () => {
-    playerTurn.innerText = ''
-    bestAttemptSpan.innerText = ''
-    currentAttemptSpan.innerText = ''
     hideMainDialog()
     playersScores.style.display = 'none'
     singlePlayer = true
-    resetGame()
+    //resetGame()
 })
 
 twoPlayerBtn.addEventListener("click", () => {
@@ -110,8 +154,23 @@ twoPlayerBtn.addEventListener("click", () => {
     resetGame()
 })
 
+playBtn.addEventListener("click", () => {
+    event.stopPropagation()
+    roundStarted = true
+    playBtn.style.display = 'none'
+    target.style.display = 'block'
+    startTime = performance.now()
+})
+
+target.addEventListener("click", () => {
+    event.stopPropagation()
+    if(singlePlayer) singlePlayerMode()
+        else twoPlayerMode()
+})
+
 selectModeBtn.addEventListener("click", () => {
     modeSelector.style.display = 'flex'
+    screenOverlay.style.display = 'flex'
 
     screenOverlay.style.opacity = '1'
     screenOverlay.style.pointerEvents = 'auto'

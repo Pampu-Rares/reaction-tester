@@ -11,6 +11,7 @@
 
 
 #minigame-container {
+    position: relative;
     background-color: var(--color-1);
     width: clamp(50px, 80vw, 650px);
     height: clamp(100px, 60vh, 325px);
@@ -21,6 +22,7 @@
     justify-content: center;
     gap: 20px;
     align-items: center;
+    user-select: none;
 }
 
 #play-btn {
@@ -36,9 +38,9 @@
 }
 
 #target {
+    position: absolute;
     background: none;
     border: none;
-    padding: none;
     display: none;
 }
 
@@ -85,7 +87,7 @@ hr {
     position: relative;
 
     background-color: var(--color-2);
-    color: var(--background-color);
+    color: var(--color-4);
 
     display: none;
     flex-direction: column;
@@ -99,7 +101,7 @@ hr {
     padding: 3px;
     border-radius: 0 20px 0 10px;
     font-size: 1.3rem;
-    background-color: var(--color-1);
+    background-color: var(--color-3);
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
@@ -114,5 +116,12 @@ hr {
     grid-template-columns:  repeat(2, 1fr);
     gap: 5%;
     justify-items: center;
+    align-items: center;
 }
+
+#stats p {
+    display: inline-block;
+    text-align: center;
+}
+
 /* #endregion */
