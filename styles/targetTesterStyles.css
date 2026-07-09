@@ -1,4 +1,24 @@
+header>p {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    justify-self: center;
+}
 
+select {
+    appearance: none;
+    height: 100%;
+    width: fit-content;
+    padding-right: 2px;
+    vertical-align: middle;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.7rem;
+    background-color: var(--color-2);
+    text-align: center;
+}
 
 #scoreboard {
     width: clamp(30px, 80vw, 330px);
@@ -7,14 +27,14 @@
     grid-template-columns:  2fr 1fr;
     gap: 5%;
     justify-items: center;
+    align-items: center;
 }
-
 
 #minigame-container {
     position: relative;
     background-color: var(--color-1);
-    width: clamp(50px, 80vw, 650px);
-    height: clamp(100px, 60vh, 325px);
+    width: clamp(50px, 80vw, 850px);
+    height: clamp(300px, 60vh, 450px);
     border-radius: 20px;
 
     display: flex;
@@ -23,6 +43,7 @@
     gap: 20px;
     align-items: center;
     user-select: none;
+    margin-bottom: 20px;
 }
 
 #play-btn {
@@ -40,18 +61,34 @@
 #target {
     position: absolute;
     background: none;
+    padding: 0;
     border: none;
     display: none;
+    border-radius: 90%;
+
+    -webkit-tap-highlight-color: transparent;
 }
 
 #target img {
     width: 100%;
     object-fit: cover;
+    border-radius: 90%;
 }
 
 .easy-difficulty {
-    width: 200px;
-    height: 200px;
+    width: clamp(100px, 18vw, 200px);
+    height: clamp(100px, 18vw, 200px);
+}
+
+.medium-difficulty {
+    width: clamp(50px, 10vw, 100px);
+    height: clamp(50px, 10vw, 100px);
+}
+
+.hard-difficulty {
+    width: clamp(25px, 6vw, 40px);
+    height: clamp(25px, 6vw, 40px);
+
 }
 
 .hidden {
@@ -62,7 +99,7 @@
 
 #players-scores {
     display: none;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 10px;
     justify-items: center;
 }
@@ -86,12 +123,14 @@ hr {
     margin: auto;
     position: relative;
 
-    background-color: var(--color-2);
+    background-color: var(--color-3);
+    border: 5px solid black;
     color: var(--color-4);
 
     display: none;
     flex-direction: column;
     gap: 20px;
+    overflow: hidden;
 }
 
 #close {
@@ -99,7 +138,8 @@ hr {
     top: 0;
     right: 0;
     padding: 3px;
-    border-radius: 0 20px 0 10px;
+    border-radius: 0 0 0 10px;
+    border: none;
     font-size: 1.3rem;
     background-color: var(--color-3);
     cursor: pointer;
@@ -119,9 +159,24 @@ hr {
     align-items: center;
 }
 
-#stats p {
+#extended-stats {
+    width: 100%;
+    display: grid;
+    grid-template-columns:  repeat(3, 1fr);
+    gap: 5%;
+    justify-items: center;
+    align-items: center;
+}
+
+#stats p, #extended-stats p, #scoreboard p, #players-scores span {
     display: inline-block;
     text-align: center;
 }
 
 /* #endregion */
+
+@media (min-width: 720px) {
+    header p {
+        flex-direction: row;
+    }
+}

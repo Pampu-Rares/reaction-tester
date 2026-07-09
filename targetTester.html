@@ -10,9 +10,19 @@
 </head>
 <body>
     <main>
+        <header>
+            <button id="change-gamemode"><img src="./media/back-arrow.svg" alt="back"></button>
+            <p>Difficulty: 
+                <select id="difficulty-selector">
+                    <option value="easy" selected>Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
+                </select>
+            </p>
+            
+            <button id="select-mode">Select mode</button>
+        </header>
         <h1>Target tester</h1>
-        <button id="change-gamemode"><img src="./media/back-arrow.svg" alt="back"></button>
-        <button id="select-mode">Select mode</button>
         <div id="screen-overlay">
             <div id="mode-selector-container">
                 <h2>Select mode</h2>
@@ -24,7 +34,7 @@
             <div id="winner-dialog">
             </div>
         </div>
-        <div id="app-container">
+        <div id="app-container" class="blurred">
             <div id="scoreboard">
                 <p>Targets missed:</p>
                 <span id="targets-missed">0</span>
@@ -33,14 +43,16 @@
             </div>
             <div id="minigame-container">
                 <button id="play-btn">Play</button>
-                <button id="target" class="easy-difficulty"><img src="./media/target.png" alt="target"></button>
+                <button id="target" class="easy-difficulty" tabindex="-1"><img src="./media/target.png" alt="target" draggable="false"></button>
             </div>
             <div id="players-scores">
                 <span>Player 1:</span>
-                <span id="player-1-score"></span>
+                <span id="player-1-hits"></span>
+                <span id="player-1-time"></span>
                 <hr>
                 <span>Player 2:</span>
-                <span id="player-2-score"></span>
+                <span id="player-2-hits"></span>
+                <span id="player-2-time"></span>
             </div>
         </div>
     </main>
