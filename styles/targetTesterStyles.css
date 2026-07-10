@@ -1,3 +1,7 @@
+header {
+    grid-template-columns: 1fr auto 1fr;
+}
+
 header>p {
     display: flex;
     flex-direction: column;
@@ -43,7 +47,6 @@ select {
     gap: 20px;
     align-items: center;
     user-select: none;
-    margin-bottom: 20px;
 }
 
 #play-btn {
@@ -63,8 +66,9 @@ select {
     background: none;
     padding: 0;
     border: none;
-    display: none;
     border-radius: 90%;
+
+    opacity: 0;
 
     -webkit-tap-highlight-color: transparent;
 }
@@ -131,23 +135,6 @@ hr {
     flex-direction: column;
     gap: 20px;
     overflow: hidden;
-}
-
-#close {
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 3px;
-    border-radius: 0 0 0 10px;
-    border: none;
-    font-size: 1.3rem;
-    background-color: var(--color-3);
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-#close:hover {
-    background-color: white;
 }
 
 #stats {

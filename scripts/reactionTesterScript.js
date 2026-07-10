@@ -1,3 +1,4 @@
+const appContainer = document.getElementById("app-container")
 const minigameArea = document.getElementById("minigame-container")
 const infoSpan = document.getElementById("info-span")
 const playerTurn = document.getElementById("player")
@@ -16,6 +17,7 @@ const winnerDialog = document.getElementById("winner-dialog")
 
 const changeGamemodeBtn = document.getElementById("change-gamemode")
 
+const scoreboard = document.getElementById("scoreboard")
 const playersScores = document.getElementById("players-scores");
 const playerOneScore = document.getElementById("player-1-score");
 const playerTwoScore = document.getElementById("player-2-score");
@@ -67,6 +69,7 @@ function singlePlayerMode() {
 }
 
 function closePopup() {
+    appContainer.classList.remove("blurred")
     screenOverlay.style.opacity = '1'
     screenOverlay.style.pointerEvents = 'none'
     playerTurn.innerText = 'Player 1'
@@ -91,14 +94,15 @@ function showWinner() {
         <button id="close" onClick="closePopup()">X</button>
         <h2 style="color: white;">${playerOneInterval == playerTwoInterval || !playerOneInterval && !playerTwoInterval ? 'No one' : playerOneInterval < playerTwoInterval || !playerTwoInterval ? 'Player 1' : 'Player 2'} wins!</h2>
         <div id="stats">
-            <p style="${playerOneInterval <= playerTwoInterval || !playerTwoInterval ? 'color: white;' : ''}">Player 1</p>
-            <p style="${playerOneInterval <= playerTwoInterval || !playerTwoInterval ? 'color: white;' : ''}">${playerOneInterval}</p>
-            <p style="${playerOneInterval >= playerTwoInterval || !playerOneInterval ? 'color: white;' : ''}">Player 2</p>
-            <p style="${playerOneInterval >= playerTwoInterval || !playerOneInterval ? 'color: white;' : ''}">${playerTwoInterval}</p>
+            <p>Player 1</p>
+            <p style="${playerOneInterval <= playerTwoInterval || !playerTwoInterval ? 'color: green;' : ''}">${playerOneInterval}</p>
+            <p style="${playerOneInterval >= playerTwoInterval || !playerOneInterval ? 'color: green;' : ''}">Player 2</p>
+            <p style="${playerOneInterval >= playerTwoInterval || !playerOneInterval ? 'color: green;' : ''}">${playerTwoInterval}</p>
         </div>
     `
     screenOverlay.style.opacity = '1'
     screenOverlay.style.pointerEvents = 'auto'
+    appContainer.classList.add("blurred")
 
     playerTurn.innerText = ''
     bestAttemptSpan.innerText = ''
@@ -183,6 +187,9 @@ window.addEventListener("keydown", (e) => {
 })
 
 singlePlayerBtn.addEventListener("click", () => {
+    playersScores.style.display = 'none'
+    scoreboard.style.display = 'grid'
+    appContainer.classList.remove("blurred")
     playerTurn.innerText = ''
     bestAttemptSpan.innerText = ''
     currentAttemptSpan.innerText = ''
@@ -201,6 +208,9 @@ singlePlayerBtn.addEventListener("click", () => {
 })
 
 twoPlayerBtn.addEventListener("click", () => {
+    scoreboard.style.display = 'none'
+    playersScores.style.display = 'grid'
+    appContainer.classList.remove("blurred")
     screenOverlay.style.opacity = '0'
     screenOverlay.style.pointerEvents = 'none'
     setTimeout(() => {
@@ -220,6 +230,7 @@ twoPlayerBtn.addEventListener("click", () => {
 })
 
 selectModeBtn.addEventListener("click", () => {
+    appContainer.classList.add("blurred")
     modeSelector.style.display = 'flex'
 
     screenOverlay.style.opacity = '1'

@@ -15,11 +15,12 @@ const targetsHitSpan = document.getElementById("targets-hit")
 
 const winnerDialog = document.getElementById("winner-dialog")
 
-const playersScores = document.getElementById("players-scores");
-const playerOneTime = document.getElementById("player-1-time");
-const playerOneHits = document.getElementById("player-1-hits");
-const playerTwoTime = document.getElementById("player-2-time");
-const playerTwoHits = document.getElementById("player-2-hits");
+const scoreboard = document.getElementById("scoreboard")
+const playersScores = document.getElementById("players-scores")
+const playerOneTime = document.getElementById("player-1-time")
+const playerOneHits = document.getElementById("player-1-hits")
+const playerTwoTime = document.getElementById("player-2-time")
+const playerTwoHits = document.getElementById("player-2-hits")
 
 const playBtn = document.getElementById("play-btn")
 const target = document.getElementById("target")
@@ -36,7 +37,7 @@ function resetGame() {
     appContainer.classList.remove('blurred')
     playsCount = 0
     roundStarted = false
-    target.style.display = 'none'
+    target.style.opacity = '0'
     playBtn.style.display = 'inline-block'
     minigameArea.style.backgroundColor = 'var(--color-1)'
     screenOverlay.style.opacity = '0'
@@ -56,8 +57,8 @@ function resetGame() {
     targetsHitSpan.innerText = '0/10'
     const heightMultiplier = Math.random() * (minigameArea.offsetHeight - target.offsetHeight)
     const widthMultiplier = Math.random() * (minigameArea.offsetWidth - target.offsetWidth)
-    target.style.top = String(heightMultiplier) + 'px'
-    target.style.left = String(widthMultiplier) + 'px'
+    target.style.top = heightMultiplier + 'px'
+    target.style.left = widthMultiplier + 'px'
     setTimeout(() => {
         modeSelector.style.display = 'none'
         winnerDialog.style.display = 'none'
@@ -69,7 +70,7 @@ function endRound() {
     endTime = performance.now()
     roundStarted = false
     playsCount = 0
-    target.style.display = 'none'
+    target.style.opacity = '0'
     winnerDialog.style.display = 'flex'
     winnerDialog.innerHTML = `
         <button id="close" onClick="${player === 2 ? 'showWinner()' : 'resetGame()'}">X</button>
@@ -102,11 +103,9 @@ function showWinner() {
     let playerOneMisses = 20 - playerOneHits.innerText.split('/')[0]
     let playerTwoInterval = Number(playerTwoTime.innerText.slice(0, playerTwoTime.innerText.length - 1))
     let playerTwoMisses = 20 - playerTwoHits.innerText.split('/')[0]
-    playerOneInterval += playerOneMisses * 2.0
-    playerTwoInterval += playerTwoMisses * 2.0
     let winner
-    if(playerOneInterval < playerTwoInterval) winner = 1
-    else if(playerTwoInterval < playerOneInterval) winner =  2
+    if(playerOneInterval + playerOneMisses * 2.0 < playerTwoInterval + playerTwoMisses * 2.0) winner = 1
+    else if(playerOneInterval + playerOneMisses * 2.0 > playerTwoInterval + playerTwoMisses * 2.0) winner =  2
     winnerDialog.innerHTML = `
         <button id="close" onClick="resetGame()">X</button>
         <h2 style="color: black;">${winner === 1 ? 'Player 1' : winner === 2 ? 'Player 2' :'No one'} wins!</h2>
@@ -145,8 +144,8 @@ function playGame(missed = false) {
     else if(noLatency) {
         const heightMultiplier = Math.random() * (minigameArea.offsetHeight - target.offsetHeight)
         const widthMultiplier = Math.random() * (minigameArea.offsetWidth - target.offsetWidth)
-        target.style.top = String(heightMultiplier) + 'px'
-        target.style.left = String(widthMultiplier) + 'px'
+        target.style.top = heightMultiplier + 'px'
+        target.style.left = widthMultiplier + 'px'
     } else {
         // add latency option
     }
@@ -172,12 +171,14 @@ minigameArea.addEventListener("click", () => {
 singlePlayerBtn.addEventListener("click", () => {
     hideMainDialog()
     playersScores.style.display = 'none'
+    scoreboard.style.display = 'grid'
     singlePlayer = true
     resetGame()
 })
 
 twoPlayerBtn.addEventListener("click", () => {
     hideMainDialog()
+    scoreboard.style.display = 'none'
     playersScores.style.display = 'grid'
     singlePlayer = false
     resetGame()
@@ -187,7 +188,7 @@ playBtn.addEventListener("click", () => {
     event.stopPropagation()
     roundStarted = true
     playBtn.style.display = 'none'
-    target.style.display = 'block'
+    target.style.opacity = '1'
     startTime = performance.now()
 })
 
@@ -215,5 +216,7 @@ difficultySelector.addEventListener("change", () => {
     else if(difficultySelector.value === 'medium') targetDifficulty = 'medium-difficulty'
     else targetDifficulty = 'hard-difficulty'
     target.classList.toggle(targetDifficulty)
-    resetGame()
+    requestAnimationFrame(() => {
+        requestAnimationFrame(resetGame)
+    })
 })

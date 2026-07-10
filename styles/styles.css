@@ -22,7 +22,8 @@ main {
 }
 
 h1 {
-    padding-top: 40px;
+    padding-top: 30px;
+    padding-bottom: 20px;
     font-size: 1.3rem;
 }
 
@@ -40,7 +41,6 @@ header {
     width: 100%;
     padding: 20px clamp(0px, 1vw, 20px);
     display: grid;
-    grid-template-columns: 1fr auto 1fr;
     align-items: center;
 }
 
@@ -74,6 +74,7 @@ header {
 /* minigame-styles */
 #app-container {
     flex: 1;
+    margin-bottom: 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -144,3 +145,20 @@ header {
 }
 
 /* #endregion */
+
+
+#close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 3px;
+    border-radius: 0 20px 0 10px;
+    font-size: 1.3rem;
+    background-color: var(--color-1);
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#close:hover {
+    background-color: white;
+}

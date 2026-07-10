@@ -1,3 +1,6 @@
+header {
+    grid-template-columns: 1fr 1fr;
+}
 
 #scoreboard {
     width: clamp(30px, 80vw, 330px);
@@ -64,27 +67,10 @@ hr {
     position: relative;
 
     background-color: var(--color-2);
-    color: var(--background-color);
 
     display: none;
     flex-direction: column;
     gap: 20px;
-}
-
-#close {
-    position: absolute;
-    top: 0;
-    right: 0;
-    padding: 3px;
-    border-radius: 0 20px 0 10px;
-    font-size: 1.3rem;
-    background-color: var(--color-1);
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-#close:hover {
-    background-color: white;
 }
 
 #stats {
