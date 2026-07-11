@@ -1,7 +1,7 @@
 # reaction-tester
-A webpage that tests your reaction time through various minigames
+A web application that tests your reaction time through various minigames
 
-![A depiction of how one of the minigames looks](./media/readme_thumbnails/reactionTesterPrev.png)
+![A depiction of how one of the minigames looks](./media/readme_thumbnails/targetTesterPrev.png)
 
 You can try this webpage for yourself [here](https://pampu-rares.github.io/reaction-tester/).
 
@@ -21,18 +21,27 @@ git  clone  https://github.com/Pampu-Rares/reaction-tester.git
 
 ### Main Page
 
-The main page displays a list of all of the available minigames. Currently, there is only one
-- More minigames will be added soon🔜
-- Each mode has an option for both 1-player and 2-player
+The main page displays a list of all of the available minigames. Currently, there are two of them.
+- A third minigame will be added soon🔜
+- Each mode offers the option for both 1-player and 2-player
 
 ![Main Page](./media/readme_thumbnails/mainPagePrev.png)
 
 ### Reaction Time Minigame
 
-This is the best and most straightforward way to test your reaction time.
-All you have to do is click in the blue rectangle and follow the instructions written there.
+This minigame tests your ability to shoot a number 20 targets as fast as you can.
 
-- You can also press the Spacebar instead of clicking the blue area
+- It has three difficulties: Easy, Medium and Hard
+Choose your desired one or challenge yourself by making the target smaller
+
+![Target Tester Minigame](./media/readme_thumbnails/targetTesterPrev.png)
+
+### Reaction Time Minigame
+
+This is the best and most straightforward way to test your reaction time.
+All you have to do is click in the blue rectangle and follow the written instructions.
+
+- 💡Pro tip: You can also press the Spacebar instead of clicking the blue area
 
 ![Reaction Time Minigame](./media/readme_thumbnails/reactionTesterPrev.png)
 

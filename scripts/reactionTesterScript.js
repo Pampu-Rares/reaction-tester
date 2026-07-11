@@ -29,14 +29,14 @@ let player = 1, playerOneWins = 0, playerOneInterval, playerTwoWins = 0, playerT
 
 function singlePlayerMode() {
     if(!roundStarted) {
-        infoSpan.innerText = 'Click when the color turns green'
-        minigameArea.style.backgroundColor = 'red'
-        minigameArea.style.color = 'white'
+        infoSpan.innerText = 'Click when the color turns blue'
+        minigameArea.style.backgroundColor = 'var(--primary-color)'
+        minigameArea.style.color = 'var(--background-color)'
         roundStarted = true
         doNotPress = true
         const timeToWait = (Math.random() * 5000) + 2001
         waitingInterval = setTimeout(() => {
-            minigameArea.style.backgroundColor = 'var(--color-1)'
+            minigameArea.style.backgroundColor = 'var(--secondary-color)'
             minigameArea.style.color = 'black'
             infoSpan.innerText = 'Click'
             doNotPress = false
@@ -48,7 +48,7 @@ function singlePlayerMode() {
         infoSpan.innerText = 'You pressed too soon'
         currentAttemptSpan.innerText = 'early'
         setTimeout(() => {
-            minigameArea.style.backgroundColor = 'var(--color-1)'
+            minigameArea.style.backgroundColor = 'var(--secondary-color)'
             minigameArea.style.color = 'black'
             infoSpan.innerText = 'Click'
             doNotPress = false
@@ -78,7 +78,7 @@ function closePopup() {
     roundStarted = false
     playerOneInterval = undefined
     playerTwoInterval = undefined
-    minigameArea.style.backgroundColor = 'var(--color-1)'
+    minigameArea.style.backgroundColor = 'var(--secondary-color)'
     minigameArea.style.color = 'black'
     infoSpan.innerText = 'Press to play'
     playerOneScore.innerText = ''
@@ -92,9 +92,9 @@ function showWinner() {
     winnerDialog.style.display = 'flex'
     winnerDialog.innerHTML = `
         <button id="close" onClick="closePopup()">X</button>
-        <h2 style="color: white;">${playerOneInterval == playerTwoInterval || !playerOneInterval && !playerTwoInterval ? 'No one' : playerOneInterval < playerTwoInterval || !playerTwoInterval ? 'Player 1' : 'Player 2'} wins!</h2>
+        <h2>${playerOneInterval == playerTwoInterval || !playerOneInterval && !playerTwoInterval ? 'No one' : playerOneInterval < playerTwoInterval || !playerTwoInterval ? 'Player 1' : 'Player 2'} wins!</h2>
         <div id="stats">
-            <p>Player 1</p>
+            <p style="${playerOneInterval <= playerTwoInterval || !playerTwoInterval ? 'color: green;' : ''}">Player 1</p>
             <p style="${playerOneInterval <= playerTwoInterval || !playerTwoInterval ? 'color: green;' : ''}">${playerOneInterval}</p>
             <p style="${playerOneInterval >= playerTwoInterval || !playerOneInterval ? 'color: green;' : ''}">Player 2</p>
             <p style="${playerOneInterval >= playerTwoInterval || !playerOneInterval ? 'color: green;' : ''}">${playerTwoInterval}</p>
@@ -118,14 +118,14 @@ function twoPlayerMode() {
             bestAttemptSpan.innerText = ''
             currentAttemptSpan.innerText = ''
         }
-        infoSpan.innerText = 'Click when the color turns green'
-        minigameArea.style.backgroundColor = 'red'
-        minigameArea.style.color = 'white'
+        infoSpan.innerText = 'Click when the color turns blue'
+        minigameArea.style.backgroundColor = 'var(--primary-color)'
+        minigameArea.style.color = 'var(--background-color)'
         roundStarted = true
         doNotPress = true
         const timeToWait = (Math.random() * 5000) + 2001
         waitingInterval = setTimeout(() => {
-            minigameArea.style.backgroundColor = 'var(--color-1)'
+            minigameArea.style.backgroundColor = 'var(--secondary-color)'
             minigameArea.style.color = 'black'
             infoSpan.innerText = 'Click'
             doNotPress = false
@@ -137,7 +137,7 @@ function twoPlayerMode() {
         infoSpan.innerText = 'You pressed too soon'
         currentAttemptSpan.innerText = 'early'
         setTimeout(() => {
-            minigameArea.style.backgroundColor = 'var(--color-1)'
+            minigameArea.style.backgroundColor = 'var(--secondary-color)'
             minigameArea.style.color = 'black'
             infoSpan.innerText = 'Click'
             doNotPress = false
@@ -186,47 +186,42 @@ window.addEventListener("keydown", (e) => {
     }
 })
 
-singlePlayerBtn.addEventListener("click", () => {
-    playersScores.style.display = 'none'
-    scoreboard.style.display = 'grid'
+function hideMainDialog() {
     appContainer.classList.remove("blurred")
-    playerTurn.innerText = ''
-    bestAttemptSpan.innerText = ''
-    currentAttemptSpan.innerText = ''
     screenOverlay.style.opacity = '0'
     screenOverlay.style.pointerEvents = 'none'
+    minigameArea.style.backgroundColor = 'var(--secondary-color)'
+    minigameArea.style.color = 'black'
+    infoSpan.innerText = 'Click'
+    roundStarted = false
+    doNotPress = false
+
+    if(singlePlayer) {
+        playerTurn.innerText = ''
+        playersScores.style.display = 'none'
+        bestAttemptSpan.innerText = ''
+        currentAttemptSpan.innerText = ''
+        scoreboard.style.display = 'grid'
+    }
+    else {
+        scoreboard.style.display = 'none'
+        playerTurn.innerText = `Player 1`
+        playersScores.style.display = 'grid'
+        playsCount = 0
+    }
     setTimeout(() => {
         modeSelector.style.display = 'none'
     }, 301)
-    playersScores.style.display = 'none'
+}
+
+singlePlayerBtn.addEventListener("click", () => {
     singlePlayer = true
-    roundStarted = false
-    doNotPress = false
-    minigameArea.style.backgroundColor = 'var(--color-1)'
-    minigameArea.style.color = 'black'
-    infoSpan.innerText = 'Click'
+    hideMainDialog()
 })
 
 twoPlayerBtn.addEventListener("click", () => {
-    scoreboard.style.display = 'none'
-    playersScores.style.display = 'grid'
-    appContainer.classList.remove("blurred")
-    screenOverlay.style.opacity = '0'
-    screenOverlay.style.pointerEvents = 'none'
-    setTimeout(() => {
-        modeSelector.style.display = 'none'
-    }, 301)
-    playersScores.style.display = 'grid'
     singlePlayer = false
-    bestAttemptSpan.innerText = ''
-    currentAttemptSpan.innerText = ''
-    playerTurn.innerText = `Player 1`
-    roundStarted = false
-    doNotPress = false
-    minigameArea.style.backgroundColor = 'var(--color-1)'
-    minigameArea.style.color = 'black'
-    infoSpan.innerText = 'Click'
-    playsCount = 0
+    hideMainDialog()
 })
 
 selectModeBtn.addEventListener("click", () => {

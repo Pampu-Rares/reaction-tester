@@ -20,49 +20,40 @@ select {
     border-radius: 10px;
     cursor: pointer;
     font-size: 0.7rem;
-    background-color: var(--color-2);
+    background-color: var(--background-color);
+    color: var(--text-color);
     text-align: center;
 }
 
-#scoreboard {
-    width: clamp(30px, 80vw, 330px);
-    font-size: 0.8rem;
-    display: grid;
-    grid-template-columns:  2fr 1fr;
-    gap: 5%;
-    justify-items: center;
-    align-items: center;
-}
 
 #minigame-container {
-    position: relative;
-    background-color: var(--color-1);
     width: clamp(50px, 80vw, 850px);
     height: clamp(300px, 60vh, 450px);
-    border-radius: 20px;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 20px;
-    align-items: center;
-    user-select: none;
+    transition: background-color 0.1s ease;
 }
 
 #play-btn {
+    position: relative;
+    z-index: 2;
     padding: 15px;
     border-radius: 20px;
-    background-color: var(--color-2);
     font-size: 1rem;
+    
+    background-color: var(--on-secondary-action);
+    color: white;
+    border: none;
 }
 
 #play-btn:hover {
     background-color: white;
+    color: var(--text-color);
     transform: scale(1.05);
 }
 
 #target {
     position: absolute;
+    z-index: 1;
     background: none;
     padding: 0;
     border: none;
@@ -116,34 +107,6 @@ hr {
     background-color: black;
     border: none;
     border-radius: 20px;
-}
-
-
-#winner-dialog {
-    width: fit-content;
-    height: fit-content;
-    padding: 40px 50px;
-    border-radius: 20px;
-    margin: auto;
-    position: relative;
-
-    background-color: var(--color-3);
-    border: 5px solid black;
-    color: var(--color-4);
-
-    display: none;
-    flex-direction: column;
-    gap: 20px;
-    overflow: hidden;
-}
-
-#stats {
-    width: 100%;
-    display: grid;
-    grid-template-columns:  repeat(2, 1fr);
-    gap: 5%;
-    justify-items: center;
-    align-items: center;
 }
 
 #extended-stats {

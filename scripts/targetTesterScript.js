@@ -39,7 +39,7 @@ function resetGame() {
     roundStarted = false
     target.style.opacity = '0'
     playBtn.style.display = 'inline-block'
-    minigameArea.style.backgroundColor = 'var(--color-1)'
+    minigameArea.style.backgroundColor = 'var(--secondary-color)'
     screenOverlay.style.opacity = '0'
     screenOverlay.style.pointerEvents = 'none'
     if(!singlePlayer) {
@@ -74,12 +74,12 @@ function endRound() {
     winnerDialog.style.display = 'flex'
     winnerDialog.innerHTML = `
         <button id="close" onClick="${player === 2 ? 'showWinner()' : 'resetGame()'}">X</button>
-        <h2 style="color: black;">${singlePlayer ? 'See your' : 'Player ' + player} stats</h2>
+        <h2 style="color: var(--text-color);">${singlePlayer ? 'See your' : 'Player ' + player} stats</h2>
         <div id="stats">
-            <p style="color: black;">Total time:</p>
-            <p style="">${((endTime - startTime) / 1000).toFixed(3)}s</p>
-            <p style="color: black;">Targets Missed:</p>
-            <p style="${Number(targetsMissedSpan.innerText) ? 'color: red;' : ''}">${targetsMissedSpan.innerText}</p>
+            <p style="color: var(--text-color);">Total time:</p>
+            <p>${((endTime - startTime) / 1000).toFixed(3)}s</p>
+            <p style="color: var(--text-color);">Targets Missed:</p>
+            <p style="${Number(targetsMissedSpan.innerText) ? 'color: var(--primary-color);' : ''}">${targetsMissedSpan.innerText}</p>
         </div>
     `
     if(!singlePlayer) {
@@ -110,12 +110,12 @@ function showWinner() {
         <button id="close" onClick="resetGame()">X</button>
         <h2 style="color: black;">${winner === 1 ? 'Player 1' : winner === 2 ? 'Player 2' :'No one'} wins!</h2>
         <div id="extended-stats">
-            <p style="${winner === 2 ? 'color: black;' : ''}">Player 1</p>
-            <p style="${winner === 2 ? 'color: black;' : ''}">${playerOneInterval}</p>
-            <p style="${winner === 2 ? 'color: black;' : ''}">${20 - playerOneMisses}/20</p>
-            <p style="${winner === 1 ? 'color: black;' : ''}">Player 2</p>
-            <p style="${winner === 1 ? 'color: black;' : ''}">${playerTwoInterval}</p>
-            <p style="${winner === 1 ? 'color: black;' : ''}">${20 - playerTwoMisses}/20</p>
+            <p style="${winner === 1 ? 'color: green;' : ''}">Player 1</p>
+            <p style="${winner === 1 ? 'color: green;' : ''}">${playerOneInterval}</p>
+            <p style="${winner === 1 ? 'color: green;' : ''}">${20 - playerOneMisses}/20</p>
+            <p style="${winner === 2 ? 'color: green;' : ''}">Player 2</p>
+            <p style="${winner === 2 ? 'color: green;' : ''}">${playerTwoInterval}</p>
+            <p style="${winner === 2 ? 'color: green;' : ''}">${20 - playerTwoMisses}/20</p>
         </div>
     `
     player = 1
@@ -130,9 +130,9 @@ function twoPlayerMode() {
 function playGame(missed = false) {
     if(missed) {
         targetsMissedSpan.innerText = String(Number(targetsMissedSpan.innerText) + 1)
-        minigameArea.style.backgroundColor = 'Red'
+        minigameArea.style.backgroundColor = 'var(--primary-color)'
         setTimeout(() => {
-            minigameArea.style.backgroundColor = 'var(--color-1)'
+            minigameArea.style.backgroundColor = 'var(--secondary-color)'
         },300)
     }
     else {

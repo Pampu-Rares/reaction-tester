@@ -1,12 +1,18 @@
+main {
+    gap: 40px;
+    justify-content: center;
+}
+
 h1 {
     font-size: 1.3rem;
 }
 
 button {
     font-size: 0.7rem;
+    font-weight: bold;
     border: none;
     border-radius: 20px;
-    background-color: var(--color-3);
+    background-color: var(--secondary-color);
     padding: 15px;
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
@@ -22,14 +28,15 @@ button:hover {
     justify-content: center;
     gap: 40px;  
     align-items: center;
-    flex: 1;
+    /* flex: 1; // will maybe re-add it later */
     padding: 20px;
     margin-top: 20px;
 }
 
 .minigame {
-    background-color: var(--color-2);
-    width: clamp(275px, 80vw, 400px);
+    background-color: var(--primary-color);
+    color: var(--background-color);
+    width: clamp(275px, 40vw, 350px);
     padding: 20px;
     border-radius: 20px;
     display: flex;
@@ -53,7 +60,7 @@ button:hover {
     border-radius: 20px;
 }
 
-@media (min-width: 1028px) {
+@media (min-width: 650px) {
     #minigames-collection {
         flex-direction: row;
         flex-wrap: wrap;

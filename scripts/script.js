@@ -1,5 +1,5 @@
-const reactionTimeRedirectBtn = document.getElementById("reaction-time-redirect")
-const targetTesterRedirectBtn = document.getElementById("target-tester-redirect")
+const reactionTimeRedirectBtn = document.getElementById("reaction-time")
+const targetTesterRedirectBtn = document.getElementById("target-tester")
 
 reactionTimeRedirectBtn.addEventListener("click", () => {
     window.location = './reactionTester.html'

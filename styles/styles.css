@@ -1,7 +1,13 @@
 :root {
     font-size: clamp(25px, 5vw, 35px);
     font-family: Arial, Helvetica, sans-serif;
-    --background-color: #ffd3ba;
+    --text-color: #1c0201;
+    --background-color: #f4d0cd;
+    --primary-color: #d62f29;
+    --secondary-color: #87c5e8;
+    --on-secondary-action: #4c90be;
+    --accent-color: #4191f6;
+
     --color-1: #6eeb83;
     --color-2: #a8d5e2;
     --color-3: #caf1f5;
@@ -15,6 +21,7 @@
 
 main {
     background-color: var(--background-color);
+    color: var(--text-color);
     width: 100vw;
     min-height: 100vh;
     display: flex;
@@ -25,6 +32,7 @@ h1 {
     padding-top: 30px;
     padding-bottom: 20px;
     font-size: 1.3rem;
+    color: var(--primary-color, black);
 }
 
 h1, h2 {
@@ -33,13 +41,16 @@ h1, h2 {
 
 button {
     cursor: pointer;
+    background-color: var(--primary-color);
+    color: var(--text-color);
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 /* #region: header */
 header {
-    background-color: #C3F0EE;
+    background-color: var(--primary-color);
+    color: var(--background-color);
     width: 100%;
-    padding: 20px clamp(0px, 1vw, 20px);
+    padding: 10px clamp(0px, 1vw, 20px);
     display: grid;
     align-items: center;
 }
@@ -47,11 +58,14 @@ header {
 #change-gamemode, #select-mode {
     border-radius: 20px;
     font-size: 0.7rem;
-    background-color: var(--color-2);
+    background-color: var(--background-color);
+    color: var(--text-color);
+    border: 1px solid gray;
 }
 
 #change-gamemode:hover, #select-mode:hover {
     background-color: white;
+    transform: scale(1.05);
 }
 
 #change-gamemode {
@@ -83,6 +97,29 @@ header {
     transition: filter 0.3s ease;
 }
 
+#scoreboard {
+    width: clamp(30px, 80vw, 330px);
+    font-size: 0.8rem;
+    display: grid;
+    grid-template-columns:  2fr 1fr;
+    gap: 5%;
+    justify-items: center;
+    align-items: center;
+}
+
+#minigame-container {
+    position: relative;
+    background-color: var(--secondary-color);
+    border-radius: 20px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+    align-items: center;
+    user-select: none;
+}
+
 .blurred {
     filter: blur(4px);
 }
@@ -108,9 +145,9 @@ header {
     height: fit-content;
     padding: 20px;
     border-radius: 20px;
-    border: 5px solid black;
 
-    background-color: var(--color-2);
+    background-color: var(--primary-color);
+    color: var(--background-color);
 
     display: flex;
     flex-direction: column;
@@ -128,7 +165,7 @@ header {
 #mode-selector button {
     width: clamp(20px, 20vw, 150px);
     height: clamp(20px, 20vw, 150px);
-    background-color: var(--color-3);
+    background-color: var(--background-color);
     border: none;
     border-radius: 20px;
     cursor: pointer;
@@ -146,19 +183,48 @@ header {
 
 /* #endregion */
 
+#winner-dialog {
+    width: fit-content;
+    height: fit-content;
+    padding: 40px 50px;
+    border-radius: 20px;
+    margin: auto;
+    position: relative;
+
+    background-color: var(--background-color);
+    border: 5px solid black;
+    color: var(--text-color);
+
+    display: none;
+    flex-direction: column;
+    gap: 20px;
+    overflow: hidden;
+}
+
+#stats {
+    width: 100%;
+    display: grid;
+    grid-template-columns:  repeat(2, 1fr);
+    gap: 5%;
+    justify-items: center;
+    align-items: center;
+}
+
 
 #close {
     position: absolute;
     top: 0;
     right: 0;
-    padding: 3px;
-    border-radius: 0 20px 0 10px;
+    padding: 3px 6px;
+    border-radius: 0 0 0 10px;
     font-size: 1.3rem;
-    background-color: var(--color-1);
+    border: none;
     cursor: pointer;
+    background-color: transparent;
     transition: background-color 0.3s ease;
 }
 
 #close:hover {
-    background-color: white;
+    background-color: var(--primary-color);
+    color: var(--background-color);
 }
