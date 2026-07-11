@@ -34,7 +34,7 @@ This minigame tests your ability to shoot a number 20 targets as fast as you can
 - It has three difficulties: Easy, Medium and Hard
 Choose your desired one or challenge yourself by making the target smaller
 
-![Target Tester Minigame](./media/readme_thumbnails/targetTesterPrev.png)
+![Target Tester Minigame](./media/readme_thumbnails/targetTesterPrev.png?)
 
 ### Reaction Time Minigame
 
@@ -43,7 +43,7 @@ All you have to do is click in the blue rectangle and follow the written instruc
 
 - 💡Pro tip: You can also press the Spacebar instead of clicking the blue area
 
-![Reaction Time Minigame](./media/readme_thumbnails/reactionTesterPrev.png)
+![Reaction Time Minigame](./media/readme_thumbnails/reactionTesterPrev.png?)
 
 ## License
 
