@@ -1,0 +1,132 @@
+header {
+    grid-template-columns: 1fr auto 1fr;
+}
+
+header>p {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    justify-self: center;
+}
+
+select {
+    appearance: none;
+    height: 100%;
+    width: fit-content;
+    padding-right: 2px;
+    vertical-align: middle;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.7rem;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    text-align: center;
+}
+
+
+#minigame-container {
+    width: clamp(50px, 80vw, 850px);
+    height: clamp(300px, 60vh, 450px);
+
+    transition: background-color 0.1s ease;
+}
+
+#play-btn {
+    position: relative;
+    z-index: 2;
+    padding: 15px;
+    border-radius: 20px;
+    font-size: 1rem;
+    
+    background-color: var(--on-secondary-action);
+    color: white;
+    border: none;
+}
+
+#play-btn:hover {
+    background-color: white;
+    color: var(--text-color);
+    transform: scale(1.05);
+}
+
+#target {
+    position: absolute;
+    z-index: 1;
+    background: none;
+    padding: 0;
+    border: none;
+    border-radius: 90%;
+
+    opacity: 0;
+
+    -webkit-tap-highlight-color: transparent;
+}
+
+#target img {
+    width: 100%;
+    object-fit: cover;
+    border-radius: 90%;
+}
+
+.easy-difficulty {
+    width: clamp(100px, 18vw, 200px);
+    height: clamp(100px, 18vw, 200px);
+}
+
+.medium-difficulty {
+    width: clamp(50px, 10vw, 100px);
+    height: clamp(50px, 10vw, 100px);
+}
+
+.hard-difficulty {
+    width: clamp(25px, 6vw, 40px);
+    height: clamp(25px, 6vw, 40px);
+
+}
+
+.hidden {
+    opacity: 0;
+}
+
+/* #region: two-player-stats */
+
+#players-scores {
+    display: none;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    justify-items: center;
+}
+
+hr {
+    width: 100%;
+    display: inline-block;
+    grid-column: 1/-1;
+    height: 5px;
+    background-color: black;
+    border: none;
+    border-radius: 20px;
+}
+
+#extended-stats {
+    width: 100%;
+    display: grid;
+    grid-template-columns:  repeat(3, 1fr);
+    gap: 5%;
+    justify-items: center;
+    align-items: center;
+}
+
+#stats p, #extended-stats p, #scoreboard p, #players-scores span {
+    display: inline-block;
+    text-align: center;
+}
+
+/* #endregion */
+
+@media (min-width: 720px) {
+    header p {
+        flex-direction: row;
+    }
+}
