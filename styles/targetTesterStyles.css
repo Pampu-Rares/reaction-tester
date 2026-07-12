@@ -118,7 +118,7 @@ hr {
     align-items: center;
 }
 
-#stats p, #extended-stats p, #scoreboard p, #players-scores span {
+#extended-stats p, #scoreboard p, #players-scores span {
     display: inline-block;
     text-align: center;
 }
