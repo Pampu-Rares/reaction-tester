@@ -33,7 +33,7 @@ let startTime, endTime, targetDifficulty = 'easy-difficulty'
 let player = 1, playerOneWins = 0, playerTwoWins = 0
 
 
-function resetGame() {
+function resetGame(isFullReset = false) {
     appContainer.classList.remove('blurred')
     playsCount = 0
     roundStarted = false
@@ -43,9 +43,10 @@ function resetGame() {
     screenOverlay.style.opacity = '0'
     screenOverlay.style.pointerEvents = 'none'
     if(!singlePlayer) {
-        if(player === 2)
+        if(player === 2 && !isFullReset)
             playBtn.innerText = 'Player 2: Play'
         else {
+            player = 1
             playBtn.innerText = 'Player 1: Play'
             playerOneTime.innerText = 'TBD'
             playerOneHits.innerText = '0/20'
@@ -217,6 +218,8 @@ difficultySelector.addEventListener("change", () => {
     else targetDifficulty = 'hard-difficulty'
     target.classList.toggle(targetDifficulty)
     requestAnimationFrame(() => {
-        requestAnimationFrame(resetGame)
+        requestAnimationFrame(() => {
+            resetGame(true)
+        })
     })
 })

@@ -153,7 +153,11 @@ function twoPlayerMode() {
         endTime = performance.now()
         roundStarted = false
         timeInterval = ((endTime - startTime)/1000).toPrecision(3)
-        infoSpan.innerText = timeInterval + ' seconds. Click again when ready'
+        if(playsCount == 3) {
+            playerTurn.innerText = "It is now player 2's turn. Click when ready"
+            infoSpan.innerText = timeInterval + ' seconds.'
+        } else infoSpan.innerText = timeInterval + ' seconds. Click again when ready'
+        
         currentAttemptSpan.innerText = timeInterval
         if(bestAttemptSpan.innerText === '' || Number(bestAttemptSpan.innerText) > timeInterval) {
             bestAttemptSpan.innerText = timeInterval
@@ -166,8 +170,6 @@ function twoPlayerMode() {
                 playerTwoScore.innerText = timeInterval
             } 
         }
-        if(playsCount == 3)
-            playerTurn.innerText = "It is now player 2's turn"
         else if(playsCount == 6) showWinner()
     }
 }
@@ -206,6 +208,8 @@ function hideMainDialog() {
     else {
         scoreboard.style.display = 'none'
         playerTurn.innerText = `Player 1`
+        playerOneScore.innerText = ''
+        playerTwoScore.innerText = ''
         playersScores.style.display = 'grid'
         playsCount = 0
     }

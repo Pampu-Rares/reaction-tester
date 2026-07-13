@@ -19,14 +19,16 @@ const winnerDialog = document.getElementById("winner-dialog")
 const changeGamemodeBtn = document.getElementById("change-gamemode")
 
 const scoreboard = document.getElementById("scoreboard")
-const playersScores = document.getElementById("players-scores");
-const playerOneScore = document.getElementById("player-1-score");
-const playerTwoScore = document.getElementById("player-2-score");
+const playersScores = document.getElementById("players-scores")
+const playerOneScore = document.getElementById("player-1-score")
+const playerTwoScore = document.getElementById("player-2-score")
+
+const timeSelector = document.getElementById("time-selector")
 
 let roundStarted = false
-let chosenTime = 10.000
-let startTime, endTime, elapsedTime
-let player = 1, playerOneWins = 0, playerTwoWins = 0
+let chosenTime = 10.000, startTime, endTime, elapsedTime
+let player = 1//, playerOneWins = 0, playerTwoWins = 0
+let timerInterval
 
 function startTimer() {
     elapsedTime = 0
@@ -68,8 +70,6 @@ function endRound() {
             playerTwoScore.innerText = (Math.abs(chosenTime - ((endTime - startTime)/1000))).toFixed(3) + 's'
         }  
     } 
-    timeSpan.innerText = '0.000'
-    timeSpan.style.opacity = '1'
     roundStarted = false
     winnerDialog.style.display = 'flex'
     winnerDialog.innerHTML = `
@@ -92,19 +92,20 @@ function endRound() {
     appContainer.classList.add('blurred')
 }
 
-function resetGame() {
+function resetGame(isFullReset = false) {
     appContainer.classList.remove('blurred')
+    cancelAnimationFrame(timerInterval)
     roundStarted = false
     infoSpan.innerText = 'Press to Play'
     timeSpan.innerText = '0.000'
     timeSpan.style.opacity = '1'
-    minigameArea.style.backgroundColor = 'var(--secondary-color)'
     screenOverlay.style.opacity = '0'
     screenOverlay.style.pointerEvents = 'none'
     if(!singlePlayer) {
-        if(player === 2)
+        if(player === 2 && !isFullReset)
             playerTurn.innerText = 'Player 2'
         else {
+            player = 1
             playerTurn.innerText = 'Player 1'
             playerOneScore.innerText = 'TBD'
             playerTwoScore.innerText = 'TBD'
@@ -120,6 +121,8 @@ function resetGame() {
 
 function closePopup() {
     appContainer.classList.remove("blurred")
+    timeSpan.innerText = '0.000'
+    timeSpan.style.opacity = '1'
     screenOverlay.style.opacity = '1'
     screenOverlay.style.pointerEvents = 'none'
     playerTurn.innerText = 'Player 1'
@@ -175,7 +178,9 @@ function hideMainDialog() {
     screenOverlay.style.pointerEvents = 'none'
     infoSpan.innerText = 'Press to play'
     timeSpan.innerText = '0.000'
+    timeSpan.style.opacity = '1'
     roundStarted = false
+    player = 1
 
     if(singlePlayer) {
         playerTurn.innerText = ''
@@ -187,10 +192,9 @@ function hideMainDialog() {
     else {
         scoreboard.style.display = 'none'
         playerTurn.innerText = `Player 1`
-        player = 1
         playersScores.style.display = 'grid'
-        playerOneScore.innerText = ''
-        playerTwoScore.innerText = ''
+        playerOneScore.innerText = 'TBD'
+        playerTwoScore.innerText = 'TBD'
     }
     setTimeout(() => {
         modeSelector.style.display = 'none'
@@ -219,4 +223,9 @@ selectModeBtn.addEventListener("click", () => {
 
 changeGamemodeBtn.addEventListener("click", () => {
     window.location = './index.html'
+})
+
+timeSelector.addEventListener("change", () => {
+    chosenTime = Number(timeSelector.value)
+    resetGame(true)
 })
