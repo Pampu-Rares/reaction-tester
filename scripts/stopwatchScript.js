@@ -23,10 +23,10 @@ const playersScores = document.getElementById("players-scores");
 const playerOneScore = document.getElementById("player-1-score");
 const playerTwoScore = document.getElementById("player-2-score");
 
-let roundStarted = false, doNotPress = false, isResetting = false
+let roundStarted = false
 let chosenTime = 10.000
 let startTime, endTime, elapsedTime
-let player = 1, playerOneWins = 0, playerOneInterval, playerTwoWins = 0, playerTwoInterval, playsCount = 0
+let player = 1, playerOneWins = 0, playerTwoWins = 0
 
 function startTimer() {
     elapsedTime = 0
@@ -46,50 +46,31 @@ function startTimer() {
 
 function playGame() {
     if(!roundStarted) {
-        infoSpan.innerText = 'Click at 10.000'
+        infoSpan.innerText = `Click at ${chosenTime}.000`
         startTimer()
         roundStarted = true
-        /*
-        setTimeout(() => {
-            cancelAnimationFrame(timerInterval)
-        }, 5000)
-        //infoSpan.innerText = 'Click when the color turns blue'
-        minigameArea.style.backgroundColor = 'var(--primary-color)'
-        minigameArea.style.color = 'var(--background-color)'
-        roundStarted = true
-        doNotPress = true
-        const timeToWait = (Math.random() * 5000) + 2001
-        waitingInterval = setTimeout(() => {
-            minigameArea.style.backgroundColor = 'var(--secondary-color)'
-            minigameArea.style.color = 'black'
-            infoSpan.innerText = 'Click'
-            doNotPress = false
-            startTime = performance.now()
-        }, timeToWait)
-        */
     }
     else endRound()
-    /*
-    else {
-        endTime = performance.now()
-        timeInterval = ((endTime - startTime)/1000).toPrecision(3)
-        infoSpan.innerText = timeInterval + ' seconds. Click again when ready'
-        currentAttemptSpan.innerText = timeInterval
-        if(bestAttemptSpan.innerText === '' || Number(bestAttemptSpan.innerText) > timeInterval)
-            bestAttemptSpan.innerText = timeInterval
-        roundStarted = false
-    }
-    */
 }
 
 function endRound() {
     cancelAnimationFrame(timerInterval)
     endTime = performance.now()
-    currentAttemptSpan.innerText = (Math.abs(chosenTime - ((endTime - startTime)/1000))).toFixed(3)
+    if(singlePlayer) {
+        currentAttemptSpan.innerText = (Math.abs(chosenTime - ((endTime - startTime)/1000))).toFixed(3)
+        if(!bestAttemptSpan.innerText || bestAttemptSpan.innerText > currentAttemptSpan.innerText)
+            bestAttemptSpan.innerText = currentAttemptSpan.innerText
+    } else {
+        if(player === 1) {
+            playerOneScore.innerText = (Math.abs(chosenTime - ((endTime - startTime)/1000))).toFixed(3) + 's'
+        }
+        else {
+            playerTwoScore.innerText = (Math.abs(chosenTime - ((endTime - startTime)/1000))).toFixed(3) + 's'
+        }  
+    } 
     timeSpan.innerText = '0.000'
     timeSpan.style.opacity = '1'
     roundStarted = false
-    playsCount = 0
     winnerDialog.style.display = 'flex'
     winnerDialog.innerHTML = `
         <button id="close" onClick="${player === 2 ? 'showWinner()' : 'resetGame()'}">X</button>
@@ -98,19 +79,13 @@ function endRound() {
             <p style="color: var(--text-color);">Stopped At:</p>
             <p>${((endTime - startTime) / 1000).toFixed(3)}s</p>
             <p style="color: var(--text-color);">Delay:</p>
-            <p>${currentAttemptSpan.innerText}</p>
+            <p>${singlePlayer ? currentAttemptSpan.innerText : player === 1 ? playerOneScore.innerText : playerTwoScore.innerText}</p>
         </div>
     `
     if(!singlePlayer) {
-        if(player === 1) {
-            player = 2
-            playerOneTime.innerText = String(((endTime - startTime) / 1000).toFixed(3)) + 's'
-        } else {
-            player = 1
-            playerTwoTime.innerText = String(((endTime - startTime) / 1000).toFixed(3)) + 's'
-        } 
-    } else if(!bestAttemptSpan.innerText || bestAttemptSpan.innerText > currentAttemptSpan.innerText)
-        bestAttemptSpan.innerText = currentAttemptSpan.innerText
+        if(player === 1) player = 2
+        else player = 1
+    }
     screenOverlay.style.display = 'flex'
     screenOverlay.style.opacity = '1'
     screenOverlay.style.pointerEvents = 'auto'
@@ -131,10 +106,8 @@ function resetGame() {
             playerTurn.innerText = 'Player 2'
         else {
             playerTurn.innerText = 'Player 1'
-            playerOneTime.innerText = 'TBD'
-            playerOneHits.innerText = '0/20'
-            playerTwoTime.innerText = 'TBD'
-            playerTwoHits.innerText = '0/20'
+            playerOneScore.innerText = 'TBD'
+            playerTwoScore.innerText = 'TBD'
         }
     } else playerTurn.innerText = ''
 
@@ -150,31 +123,31 @@ function closePopup() {
     screenOverlay.style.opacity = '1'
     screenOverlay.style.pointerEvents = 'none'
     playerTurn.innerText = 'Player 1'
-    playsCount = 0
-    doNotPress = false
     roundStarted = false
-    playerOneInterval = undefined
-    playerTwoInterval = undefined
     minigameArea.style.backgroundColor = 'var(--secondary-color)'
     minigameArea.style.color = 'black'
     infoSpan.innerText = 'Press to play'
     playerOneScore.innerText = ''
     playerTwoScore.innerText = ''
+    resetGame()
     setTimeout(() => {
         winnerDialog.style.display = 'none'
     }, 301)
 }
 
 function showWinner() {
+    let winner = 1
+    if(playerOneScore.innerText == playerTwoScore.innerText) winner = null
+    else if(playerOneScore.innerText.slice(0, playerOneScore.innerText.length - 1) > playerTwoScore.innerText.slice(0, playerTwoScore.innerText.length - 1)) winner = 2
     winnerDialog.style.display = 'flex'
     winnerDialog.innerHTML = `
         <button id="close" onClick="closePopup()">X</button>
-        <h2>${playerOneInterval == playerTwoInterval || !playerOneInterval && !playerTwoInterval ? 'No one' : playerOneInterval < playerTwoInterval || !playerTwoInterval ? 'Player 1' : 'Player 2'} wins!</h2>
+        <h2>${!winner ? 'No one' : winner === 1 ? 'Player 1' : 'Player 2'} wins!</h2>
         <div id="stats">
-            <p style="${playerOneInterval <= playerTwoInterval || !playerTwoInterval ? 'color: green;' : ''}">Player 1</p>
-            <p style="${playerOneInterval <= playerTwoInterval || !playerTwoInterval ? 'color: green;' : ''}">${playerOneInterval}</p>
-            <p style="${playerOneInterval >= playerTwoInterval || !playerOneInterval ? 'color: green;' : ''}">Player 2</p>
-            <p style="${playerOneInterval >= playerTwoInterval || !playerOneInterval ? 'color: green;' : ''}">${playerTwoInterval}</p>
+            <p style="${winner === 1 ? 'color: green;' : ''}">Player 1</p>
+            <p style="${winner === 1 ? 'color: green;' : ''}">${playerOneScore.innerText}</p>
+            <p style="${winner === 2? 'color: green;' : ''}">Player 2</p>
+            <p style="${winner === 2 ? 'color: green;' : ''}">${playerTwoScore.innerText}</p>
         </div>
     `
     screenOverlay.style.opacity = '1'
@@ -187,15 +160,12 @@ function showWinner() {
 }
 
 minigameArea.addEventListener("click", () => {
-    if(!isResetting) {
-        playGame()
-    }
+    playGame()
 })
 
 window.addEventListener("keydown", (e) => {
     if(e.key === ' ' && screenOverlay.style.opacity == '0') {
-        if(!singlePlayer) twoPlayerMode()
-        else singlePlayerMode()
+        playGame()
     }
 })
 
@@ -203,12 +173,9 @@ function hideMainDialog() {
     appContainer.classList.remove("blurred")
     screenOverlay.style.opacity = '0'
     screenOverlay.style.pointerEvents = 'none'
-    minigameArea.style.backgroundColor = 'var(--secondary-color)'
-    minigameArea.style.color = 'black'
     infoSpan.innerText = 'Press to play'
     timeSpan.innerText = '0.000'
     roundStarted = false
-    doNotPress = false
 
     if(singlePlayer) {
         playerTurn.innerText = ''
@@ -220,8 +187,10 @@ function hideMainDialog() {
     else {
         scoreboard.style.display = 'none'
         playerTurn.innerText = `Player 1`
+        player = 1
         playersScores.style.display = 'grid'
-        playsCount = 0
+        playerOneScore.innerText = ''
+        playerTwoScore.innerText = ''
     }
     setTimeout(() => {
         modeSelector.style.display = 'none'
@@ -241,11 +210,13 @@ twoPlayerBtn.addEventListener("click", () => {
 selectModeBtn.addEventListener("click", () => {
     appContainer.classList.add("blurred")
     modeSelector.style.display = 'flex'
+    cancelAnimationFrame(timerInterval)
 
+    screenOverlay.style.display = 'flex'
     screenOverlay.style.opacity = '1'
     screenOverlay.style.pointerEvents = 'auto'
 })
 
 changeGamemodeBtn.addEventListener("click", () => {
-    window.location = 'index.html'
+    window.location = './index.html'
 })
