@@ -27,14 +27,14 @@ The main page displays a list of all of the available minigames. Currently, ther
 
 ![Main Page](./media/readme_thumbnails/mainPagePrev.png)
 
-### Reaction Time Minigame
+### Target Tester Minigame
 
 This minigame tests your ability to shoot a number 20 targets as fast as you can.
 
-- It has three difficulties: Easy, Medium and Hard
-Choose your desired one or challenge yourself by making the target smaller
+- ⭐It has three difficulties: Easy, Medium and Hard
+Choose the desired one or challenge yourself by making the target smaller
 
-![Target Tester Minigame](./media/readme_thumbnails/targetTesterPrev.png?)
+![Target Tester Minigame](./media/readme_thumbnails/targetTesterPrev.png)
 
 ### Reaction Time Minigame
 
@@ -43,7 +43,16 @@ All you have to do is click in the blue rectangle and follow the written instruc
 
 - 💡Pro tip: You can also press the Spacebar instead of clicking the blue area
 
-![Reaction Time Minigame](./media/readme_thumbnails/reactionTesterPrev.png?)
+![Reaction Time Minigame](./media/readme_thumbnails/reactionTesterPrev.png)
+
+### Stopwatch Tester Minigame
+
+This minigame challenges your internal clock. Select a time interval and, after 5 seconds, the on-screen timer disappears. Click stop when you think the time is up. 
+
+- 💡Pro tip: You can also press the Spacebar instead of clicking the blue area
+- ⌚You can select between 10, 15 and 20 seconds
+
+![Reaction Time Minigame](./media/readme_thumbnails/stopwatchTesterPrev.png)
 
 ## License
 

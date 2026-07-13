@@ -201,6 +201,7 @@ header {
     overflow: hidden;
 }
 
+
 #stats {
     width: 100%;
     display: grid;
@@ -208,6 +209,11 @@ header {
     gap: 5%;
     justify-items: center;
     align-items: center;
+}
+
+#stats p {
+    display: inline-block;
+    text-align: center;
 }
 
 
