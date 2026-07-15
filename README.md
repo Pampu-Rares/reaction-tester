@@ -21,11 +21,11 @@ git  clone  https://github.com/Pampu-Rares/reaction-tester.git
 
 ### Main Page
 
-The main page displays a list of all of the available minigames. Currently, there are two of them.
-- A third minigame will be added soon🔜
-- Each mode offers the option for both 1-player and 2-player
+The main page displays a list of all of the available minigames. Currently, there are three of them.
 
-![Main Page](./media/readme_thumbnails/mainPagePrev.png)
+- Each one offers the option for both 1-player and 2-player
+
+![Main Page](./media/readme_thumbnails/mainPagePrev.png?)
 
 ### Target Tester Minigame
 
