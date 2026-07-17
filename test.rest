@@ -1,0 +1,11 @@
+### POST reactionTimeRoutes
+POST http://localhost:2020/reactionTime
+Content-Type: application/json
+
+{
+    "username": "Fra",
+    "time": "5.03"
+}
+
+### GET leaderboard
+GET  http://localhost:2020/reactionTime
