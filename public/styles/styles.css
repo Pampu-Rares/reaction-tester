@@ -22,7 +22,6 @@
 main {
     background-color: var(--background-color);
     color: var(--text-color);
-    width: 100vw;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -105,6 +104,7 @@ header {
     gap: 5%;
     justify-items: center;
     align-items: center;
+    margin-bottom: 40px;
 }
 
 #minigame-container {
@@ -183,7 +183,7 @@ header {
 
 /* #endregion */
 
-#winner-dialog {
+#winner-dialog, dialog {
     width: fit-content;
     height: fit-content;
     padding: 40px 50px;
@@ -195,10 +195,13 @@ header {
     border: 5px solid black;
     color: var(--text-color);
 
+    overflow: hidden;
+}
+
+#winner-dialog {
     display: none;
     flex-direction: column;
     gap: 20px;
-    overflow: hidden;
 }
 
 
@@ -234,3 +237,62 @@ header {
     background-color: var(--primary-color);
     color: var(--background-color);
 }
+
+/* #region:leaderboard */
+#leaderboard-container {
+    width: clamp(20px, 70%, 650px);   
+}
+
+#leaderboard-container span {
+    display: inline-block;
+    width: 100%;
+    border-bottom: var(--text-color) 5px solid;
+}
+
+#leaderboard {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#leaderboard tr:not(:last-of-type) {
+    border-bottom: var(--text-color) 2px solid;
+    margin: 6px;
+}
+
+#new-leaderboard-entry-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+#new-leaderboard-entry-container label {
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+}
+
+#new-entry-name {
+    height: 100%;
+    font-size: 0.8rem;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    border-radius: 10px;
+    border: var(--text-color) 2px solid;
+}
+
+#submit-leaderboard-entry {
+    color: var(--background-color);
+    font-size: 0.8rem;
+    border-radius: 20px;
+    padding: 10px;
+}
+
+#submit-leaderboard-entry:hover {
+    background-color: var(--background-color);
+    color: var(--primary-color);
+}
+
+/* #endregion */

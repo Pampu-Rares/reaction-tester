@@ -18,9 +18,10 @@ const winnerDialog = document.getElementById("winner-dialog")
 const changeGamemodeBtn = document.getElementById("change-gamemode")
 
 const scoreboard = document.getElementById("scoreboard")
-const playersScores = document.getElementById("players-scores");
-const playerOneScore = document.getElementById("player-1-score");
-const playerTwoScore = document.getElementById("player-2-score");
+const playersScores = document.getElementById("players-scores")
+const playerOneScore = document.getElementById("player-1-score")
+const playerTwoScore = document.getElementById("player-2-score")
+const twoPRound = document.getElementById("2-p-round")
 
 let roundStarted = false, doNotPress = false, isResetting = false
 let waitingInterval
@@ -74,6 +75,7 @@ function closePopup() {
     screenOverlay.style.opacity = '1'
     screenOverlay.style.pointerEvents = 'none'
     playerTurn.innerText = 'Player 1'
+    twoPRound.innerText = 'Round 0/3'
     playsCount = 0
     doNotPress = false
     roundStarted = false
@@ -115,10 +117,16 @@ function twoPlayerMode() {
     else playerTurn.innerText = `Player 2`
     if(!roundStarted) {
         playsCount++
-        if(playsCount == 4) {
+        if(playsCount <= 3) {
+            twoPRound.innerText = `Round ${playsCount}/3`
+        } else if(playsCount == 4) {
             bestAttemptSpan.innerText = ''
             currentAttemptSpan.innerText = ''
-        }
+            twoPRound.innerText = `Round ${playsCount - 3}/3`
+        } else {
+            twoPRound.innerText = `Round ${playsCount - 3}/3`
+        } 
+        
         infoSpan.innerText = 'Click when the color turns blue'
         minigameArea.style.backgroundColor = 'var(--primary-color)'
         minigameArea.style.color = 'var(--background-color)'
@@ -171,7 +179,7 @@ function twoPlayerMode() {
                 playerTwoScore.innerText = timeInterval
             } 
         }
-        else if(playsCount == 6) showWinner()
+        if(playsCount == 6) showWinner()
     }
 }
 
@@ -183,7 +191,8 @@ minigameArea.addEventListener("click", () => {
 })
 
 window.addEventListener("keydown", (e) => {
-    if(e.key === ' ' && screenOverlay.style.opacity == '0') {
+    if(e.key === ' ' && screenOverlay.style.opacity == '0' && !newEntryDialog.hasAttribute('open')) {
+        e.preventDefault()
         if(!singlePlayer) twoPlayerMode()
         else singlePlayerMode()
     }
@@ -200,6 +209,7 @@ function hideMainDialog() {
     doNotPress = false
 
     if(singlePlayer) {
+        twoPRound.style.display = 'none'
         playerTurn.innerText = ''
         playersScores.style.display = 'none'
         bestAttemptSpan.innerText = ''
@@ -207,6 +217,8 @@ function hideMainDialog() {
         scoreboard.style.display = 'grid'
     }
     else {
+        twoPRound.style.display = 'inline-block'
+        twoPRound.innerText = 'Round 1/3'
         scoreboard.style.display = 'none'
         playerTurn.innerText = `Player 1`
         playerOneScore.innerText = ''

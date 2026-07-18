@@ -30,6 +30,7 @@
         
         <div id="app-container" class="blurred">
             <div id="minigame-container">
+                <p id="2-p-round"></p>
                 <p id="player"></p>
                 <p id="info-span">Press to play</p>
             </div>
@@ -46,18 +47,23 @@
                 <span>Player 2:</span>
                 <span id="player-2-score"></span>
             </div>
-        </div>
-        <div id="leaderboard-container">
-            <span>Leaderboard</span>
-            <table id="leaderboard">
-                
-            </table>
+            <div id="leaderboard-container">
+                <span>Leaderboard</span>
+                <table id="leaderboard">
+                    
+                </table>
+            </div>
         </div>
         <dialog>
-            <h3>You have set a new record!</h3>
-            <input type="text" maxlength="10" id="new-entry-name">
-            <p>Time: <span id="time-span"></span></p>
-            <button type="button" id="submit-leaderboard-entry">Submit</button>
+            <div id="new-leaderboard-entry-container">
+                <h3>You have set a new record!</h3>
+                <label for="new-entry-name">
+                    Enter your name:
+                    <input type="text" maxlength="10" id="new-entry-name" placeholder="E.g: Ben Dover">
+                </label>
+                <p>Time: <span id="time-span"></span></p>
+                <button type="button" id="submit-leaderboard-entry">Submit</button>
+            <div>
         </dialog>
     </main>
     <script src="scripts/reactionTesterLeaderboard.js"></script>

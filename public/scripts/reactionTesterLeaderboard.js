@@ -8,17 +8,20 @@ let leaderboardEntries = []
 
 async function getLeaderboard() {
     try {
-        leaderboardDiv.innerHTML = ''
+        let htmlTableString = '<tbody>'
         leaderboardEntries = await fetch('/reactionTime/')
         leaderboardEntries = await leaderboardEntries.json()
         leaderboardEntries = leaderboardEntries.leaderboard
-        leaderboardEntries.forEach(position => {
-        leaderboardDiv.innerHTML += `
+        leaderboardEntries.forEach((position, index) => {
+        htmlTableString += `
         <tr>
-            <th>${position.username}</th>
+            <th>${index + 1}</th>
+            <td>${position.username}</td>
             <td>${position.time}</td>
-        <tr>`
+        </tr>`
         })
+        htmlTableString += '</tbody>'
+        leaderboardDiv.innerHTML += htmlTableString
     } catch(err) {
         leaderboardDiv.innerHTML = '<p>' + err.message + '</p'
     }
@@ -41,15 +44,20 @@ async function enterNewRecord(username, time) {
 
 function askForLeaderboardEntry(time) {
     timeSpan.innerText = time
-    newEntryDialog.show()
+    newEntryDialog.showModal()
 }
 
 
 
 async function enterEntry() {
-    enterNewRecord(nameInput.value, timeSpan.innerText)
-    timeSpan.innerText = ''
-    newEntryDialog.close()
+    if(!(String(nameInput.value).trim().length)) {
+        alert("You need to fill in your name")
+        console.log(nameInput.value, String(nameInput.value).trim)
+    } else {
+        enterNewRecord(nameInput.value, timeSpan.innerText)
+        timeSpan.value = ''
+        newEntryDialog.close()
+    }
 }
 
 
