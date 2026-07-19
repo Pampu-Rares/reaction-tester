@@ -220,7 +220,7 @@ header {
 }
 
 
-#close {
+#close, .close {
     position: absolute;
     top: 0;
     right: 0;
@@ -233,7 +233,7 @@ header {
     transition: background-color 0.3s ease;
 }
 
-#close:hover {
+#close:hover, .close:hover {
     background-color: var(--primary-color);
     color: var(--background-color);
 }

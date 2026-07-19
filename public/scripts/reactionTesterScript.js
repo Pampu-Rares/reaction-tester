@@ -27,6 +27,7 @@ let roundStarted = false, doNotPress = false, isResetting = false
 let waitingInterval
 let startTime, endTime
 let player = 1, playerOneWins = 0, playerOneInterval, playerTwoWins = 0, playerTwoInterval, playsCount = 0
+let winner
 
 function singlePlayerMode() {
     if(!roundStarted) {
@@ -63,17 +64,27 @@ function singlePlayerMode() {
         timeInterval = ((endTime - startTime)/1000).toPrecision(3)
         infoSpan.innerText = timeInterval + ' seconds. Click again when ready'
         currentAttemptSpan.innerText = timeInterval
-        if(bestAttemptSpan.innerText === '' || Number(bestAttemptSpan.innerText) > timeInterval)
+        if(bestAttemptSpan.innerText === '' || Number(bestAttemptSpan.innerText) > timeInterval) {
             bestAttemptSpan.innerText = timeInterval
+            askForLeaderboardEntry(bestAttemptSpan.innerText)  
+        }
         roundStarted = false
-        if(bestAttemptSpan.innerText < leaderboardEntries[leaderboardEntries.length - 1].time || leaderboardEntries.length < 20) askForLeaderboardEntry(bestAttemptSpan.innerText)
     }
 }
 
 function closePopup() {
     appContainer.classList.remove("blurred")
-    screenOverlay.style.opacity = '1'
+    screenOverlay.style.opacity = '0'
     screenOverlay.style.pointerEvents = 'none'
+    if(winner) {
+        if(winner === 1) {
+            nameInput.value = 'Player 1'
+            askForLeaderboardEntry(playerOneInterval)
+        } else {
+            nameInput.value = 'Player 2'
+            askForLeaderboardEntry(playerTwoInterval)
+        }
+    }
     playerTurn.innerText = 'Player 1'
     twoPRound.innerText = 'Round 0/3'
     playsCount = 0
@@ -86,21 +97,26 @@ function closePopup() {
     infoSpan.innerText = 'Press to play'
     playerOneScore.innerText = ''
     playerTwoScore.innerText = ''
+
+
     setTimeout(() => {
         winnerDialog.style.display = 'none'
     }, 301)
 }
 
 function showWinner() {
+    if(playerOneInterval == playerTwoInterval || (!playerOneInterval && !playerTwoInterval)) winner = null
+    else if(playerOneInterval < playerTwoInterval || !playerTwoInterval) winner = 1
+    else winner = 2
     winnerDialog.style.display = 'flex'
     winnerDialog.innerHTML = `
         <button id="close" onClick="closePopup()">X</button>
-        <h2>${playerOneInterval == playerTwoInterval || !playerOneInterval && !playerTwoInterval ? 'No one' : playerOneInterval < playerTwoInterval || !playerTwoInterval ? 'Player 1' : 'Player 2'} wins!</h2>
+        <h2>${!winner ? 'No one' : winner === 1 ? 'Player 1' : 'Player 2'} wins!</h2>
         <div id="stats">
-            <p style="${playerOneInterval <= playerTwoInterval || !playerTwoInterval ? 'color: green;' : ''}">Player 1</p>
-            <p style="${playerOneInterval <= playerTwoInterval || !playerTwoInterval ? 'color: green;' : ''}">${playerOneInterval}</p>
-            <p style="${playerOneInterval >= playerTwoInterval || !playerOneInterval ? 'color: green;' : ''}">Player 2</p>
-            <p style="${playerOneInterval >= playerTwoInterval || !playerOneInterval ? 'color: green;' : ''}">${playerTwoInterval}</p>
+            <p style="${winner === 1 ? 'color: green;' : ''}">Player 1</p>
+            <p style="${winner === 1 ? 'color: green;' : ''}">${playerOneInterval}</p>
+            <p style="${winner === 2 ? 'color: green;' : ''}">Player 2</p>
+            <p style="${winner === 2 ? 'color: green;' : ''}">${playerTwoInterval}</p>
         </div>
     `
     screenOverlay.style.opacity = '1'

@@ -26,7 +26,20 @@ router.post('/', (req, res) => {
         const addEntry = db.prepare(`
             INSERT INTO reaction_time_leaderboard(username, time) VALUES(?, ?)
             `)
-        addEntry.run(req.body.username, Number(req.body.time))
+        const result = addEntry.run(req.body.username, Number(req.body.time))
+        res.status(200).json({ message: "succes" , id: result.lastInsertRowid})
+    } catch(err) {
+        console.log('ERROR: ' + err.message)
+        res.status(500)
+    }
+})
+
+router.post('/:id', (req, res) => {
+    try {
+        const updateRecord = db.prepare(`
+                UPDATE reaction_time_leaderboard SET username = ?, time = ? WHERE id = ?
+            `)
+        updateRecord.run(req.body.username, req.body.time, req.params.id)
         res.status(200).json({ message: "succes" })
     } catch(err) {
         console.log('ERROR: ' + err.message)

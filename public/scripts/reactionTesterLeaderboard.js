@@ -3,8 +3,10 @@ const newEntryDialog = document.querySelector("dialog")
 const timeSpan = document.getElementById("time-span")
 const submitEntryBtn = document.getElementById("submit-leaderboard-entry")
 const nameInput = document.getElementById("new-entry-name")
+const exitEntryDialog = document.getElementById("close-leaderboard-entry-container")
 
 let leaderboardEntries = []
+let recordId = sessionStorage.getItem("recordId") || null
 
 async function getLeaderboard() {
     try {
@@ -17,7 +19,7 @@ async function getLeaderboard() {
         <tr>
             <th>${index + 1}</th>
             <td>${position.username}</td>
-            <td>${position.time}</td>
+            <td>${position.time.toFixed(3)}s</td>
         </tr>`
         })
         htmlTableString += '</tbody>'
@@ -38,29 +40,52 @@ async function enterNewRecord(username, time) {
             username,
             time
         })
+    }).then(res => res.json())
+    .then(data => {
+        sessionStorage.setItem("recordId", data.id)
+        recordId = data.id
+        getLeaderboard()
+    })
+    .catch(err => leaderboardDiv.innerHTML = '<p>' + err.message + '</p>')
+}
+
+async function editRecord(username, time) {
+    leaderboardDiv.innerHTML = ''
+    fetch('/reactionTime/' + recordId, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            username,
+            time
+        })
     }).then(() => {getLeaderboard()})
     .catch(err => leaderboardDiv.innerHTML = '<p>' + err.message + '</p>')
 }
 
-function askForLeaderboardEntry(time) {
-    timeSpan.innerText = time
-    newEntryDialog.showModal()
-}
-
-
-
 async function enterEntry() {
     if(!(String(nameInput.value).trim().length)) {
         alert("You need to fill in your name")
-        console.log(nameInput.value, String(nameInput.value).trim)
     } else {
-        enterNewRecord(nameInput.value, timeSpan.innerText)
-        timeSpan.value = ''
+        if(!recordId) enterNewRecord(nameInput.value, timeSpan.innerText)
+            else editRecord(nameInput.value, timeSpan.innerText)
         newEntryDialog.close()
+    }
+}
+
+function askForLeaderboardEntry(time) {
+    if(time < leaderboardEntries[leaderboardEntries.length - 1].time || leaderboardEntries.length < 20) {
+        timeSpan.innerText = time
+        newEntryDialog.showModal()
     }
 }
 
 
 submitEntryBtn.addEventListener("click", enterEntry)
+
+exitEntryDialog.addEventListener("click", () => {
+    newEntryDialog.close()
+})
 
 getLeaderboard()
