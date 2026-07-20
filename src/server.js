@@ -2,6 +2,7 @@ import express from 'express'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import reactionTimeRoutes from './routes/reactionTimeRoutes.js'
+import stopwatchTestRoutes from './routes/stopwatchTesterRoutes.js'
 
 const app = express()
 const PORT = process.env.PORT || 2020
@@ -14,6 +15,7 @@ app.use(express.static(publicPath))
 app.use(express.json())
 
 app.use('/reactionTime', reactionTimeRoutes)
+app.use('/stopwatchTester', stopwatchTestRoutes)
 
 app.listen(PORT, () => {
     console.log('Server running at port: ' + PORT)

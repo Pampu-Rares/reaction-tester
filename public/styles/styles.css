@@ -254,6 +254,10 @@ header {
     width: 100%;
 }
 
+#leaderboard td {
+    text-align: center;
+}
+
 #leaderboard tr:not(:last-of-type) {
     border-bottom: var(--text-color) 2px solid;
     margin: 6px;

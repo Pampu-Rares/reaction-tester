@@ -29,6 +29,7 @@ let roundStarted = false
 let chosenTime = 10.000, startTime, endTime, elapsedTime
 let player = 1//, playerOneWins = 0, playerTwoWins = 0
 let timerInterval
+let winner
 
 function startTimer() {
     elapsedTime = 0
@@ -110,7 +111,10 @@ function resetGame(isFullReset = false) {
             playerOneScore.innerText = 'TBD'
             playerTwoScore.innerText = 'TBD'
         }
-    } else playerTurn.innerText = ''
+    } else {
+        playerTurn.innerText = ''
+        askForLeaderboardEntry((Math.abs(chosenTime - ((endTime - startTime)/1000))).toFixed(3), chosenTime)
+    }
 
     setTimeout(() => {
         modeSelector.style.display = 'none'
@@ -123,13 +127,15 @@ function closePopup() {
     appContainer.classList.remove("blurred")
     timeSpan.innerText = '0.000'
     timeSpan.style.opacity = '1'
-    screenOverlay.style.opacity = '1'
+    screenOverlay.style.opacity = '0' // I'll see later if i broke something
     screenOverlay.style.pointerEvents = 'none'
     playerTurn.innerText = 'Player 1'
     roundStarted = false
     minigameArea.style.backgroundColor = 'var(--secondary-color)'
     minigameArea.style.color = 'black'
     infoSpan.innerText = 'Press to play'
+    if(winner == 1) askForLeaderboardEntry(playerOneScore.innerText.slice(0, -1), chosenTime)
+    else askForLeaderboardEntry(playerTwoScore.innerText.slice(0, -1), chosenTime)
     playerOneScore.innerText = ''
     playerTwoScore.innerText = ''
     resetGame()
@@ -139,7 +145,7 @@ function closePopup() {
 }
 
 function showWinner() {
-    let winner = 1
+    winner = 1
     if(playerOneScore.innerText == playerTwoScore.innerText) winner = null
     else if(playerOneScore.innerText.slice(0, playerOneScore.innerText.length - 1) > playerTwoScore.innerText.slice(0, playerTwoScore.innerText.length - 1)) winner = 2
     winnerDialog.style.display = 'flex'
@@ -167,7 +173,7 @@ minigameArea.addEventListener("click", () => {
 })
 
 window.addEventListener("keydown", (e) => {
-    if(e.key === ' ' && screenOverlay.style.opacity == '0') {
+    if(e.key === ' ' && screenOverlay.style.opacity == '0' && !newEntryDialog.hasAttribute('open')) {
         playGame()
     }
 })

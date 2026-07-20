@@ -9,3 +9,6 @@ Content-Type: application/json
 
 ### GET leaderboard
 GET  http://localhost:2020/reactionTime
+
+### GET leaderboard
+GET  http://localhost:2020/stopwatchTester
