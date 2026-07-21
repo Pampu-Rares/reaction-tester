@@ -39,7 +39,7 @@ function startTimer() {
         if(startTime === null) startTime = currentTime
         elapsedTime = currentTime - startTime
         timeSpan.innerText = (elapsedTime/1000).toFixed(3)
-        if(timeSpan.innerText == 3.900) timeSpan.style.opacity = '0'
+        if(timeSpan.innerText >= 3.900) timeSpan.style.opacity = '0'
         if(timeSpan.innerText.split('.')[0] < 5)
             timerInterval = requestAnimationFrame(update)
     }

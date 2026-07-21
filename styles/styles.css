@@ -163,8 +163,8 @@ header {
 }
 
 #mode-selector button {
-    width: clamp(20px, 20vw, 150px);
-    height: clamp(20px, 20vw, 150px);
+    width: clamp(20px, 30vw, 150px);
+    height: clamp(20px, 30vw, 150px);
     background-color: var(--background-color);
     border: none;
     border-radius: 20px;
