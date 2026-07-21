@@ -40,7 +40,7 @@ function startTimer() {
         if(startTime === null) startTime = currentTime
         elapsedTime = currentTime - startTime
         timeSpan.innerText = (elapsedTime/1000).toFixed(3)
-        if(timeSpan.innerText == 3.900) timeSpan.style.opacity = '0'
+        if(timeSpan.innerText >= 3.900) timeSpan.style.opacity = '0'
         if(timeSpan.innerText.split('.')[0] < 5)
             timerInterval = requestAnimationFrame(update)
     }
@@ -113,7 +113,8 @@ function resetGame(isFullReset = false) {
         }
     } else {
         playerTurn.innerText = ''
-        askForLeaderboardEntry((Math.abs(chosenTime - ((endTime - startTime)/1000))).toFixed(3), chosenTime)
+        if(!isFullReset)
+            askForLeaderboardEntry((Math.abs(chosenTime - ((endTime - startTime)/1000))).toFixed(3), chosenTime)
     }
 
     setTimeout(() => {
@@ -174,6 +175,7 @@ minigameArea.addEventListener("click", () => {
 
 window.addEventListener("keydown", (e) => {
     if(e.key === ' ' && screenOverlay.style.opacity == '0' && !newEntryDialog.hasAttribute('open')) {
+        e.preventDefault()
         playGame()
     }
 })

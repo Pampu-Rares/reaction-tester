@@ -6,7 +6,7 @@ const nameInput = document.getElementById("new-entry-name")
 const exitEntryDialog = document.getElementById("close-leaderboard-entry-container")
 
 let leaderboardEntries = []
-let recordId = sessionStorage.getItem("recordId") || null
+let reactionTesterRecordId = sessionStorage.getItem("reactionTesterRecordId") || null
 
 async function getLeaderboard() {
     try {
@@ -42,8 +42,8 @@ async function enterNewRecord(username, time) {
         })
     }).then(res => res.json())
     .then(data => {
-        sessionStorage.setItem("recordId", data.id)
-        recordId = data.id
+        sessionStorage.setItem("reactionTesterRecordId", data.id)
+        reactionTesterRecordId = data.id
         getLeaderboard()
     })
     .catch(err => leaderboardDiv.innerHTML = '<p>' + err.message + '</p>')
@@ -51,7 +51,7 @@ async function enterNewRecord(username, time) {
 
 async function editRecord(username, time) {
     leaderboardDiv.innerHTML = ''
-    fetch('/reactionTime/' + recordId, {
+    fetch('/reactionTime/' + reactionTesterRecordId, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -68,7 +68,7 @@ async function enterEntry() {
     if(!(String(nameInput.value).trim().length)) {
         alert("You need to fill in your name")
     } else {
-        if(!recordId) enterNewRecord(nameInput.value, timeSpan.innerText)
+        if(!reactionTesterRecordId) enterNewRecord(nameInput.value, timeSpan.innerText)
             else editRecord(nameInput.value, timeSpan.innerText)
         newEntryDialog.close()
     }
@@ -76,8 +76,10 @@ async function enterEntry() {
 
 function askForLeaderboardEntry(time) {
     if(time < leaderboardEntries[leaderboardEntries.length - 1].time || leaderboardEntries.length < 20) {
-        timeSpan.innerText = time
-        newEntryDialog.showModal()
+        if(!reactionTesterRecordId || (reactionTesterRecordId && timeSpan.innerText > time)) {
+            timeSpan.innerText = time
+            newEntryDialog.showModal()
+        }
     }
 }
 

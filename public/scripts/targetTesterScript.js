@@ -53,7 +53,13 @@ function resetGame(isFullReset = false) {
             playerTwoTime.innerText = 'TBD'
             playerTwoHits.innerText = '0/20'
         }
-    } else playBtn.innerText = 'Play'
+    } else {
+        playBtn.innerText = 'Play'
+        if(!isFullReset) {
+            const difficultyToInt = targetDifficulty === 'easy-difficulty' ? 1 : targetDifficulty === 'medium-difficulty' ? 2 : 3
+            askForLeaderboardEntry(((endTime - startTime) / 1000).toFixed(3), targetsMissedSpan.innerText, difficultyToInt)
+        }
+    } 
     targetsMissedSpan.innerText = '0'
     targetsHitSpan.innerText = '0/10'
     const heightMultiplier = Math.random() * (minigameArea.offsetHeight - target.offsetHeight)
@@ -90,6 +96,7 @@ function endRound() {
         } else {
             player = 1
             playerTwoTime.innerText = String(((endTime - startTime) / 1000).toFixed(3)) + 's'
+            //
         } 
     }
     screenOverlay.style.display = 'flex'
@@ -174,7 +181,7 @@ singlePlayerBtn.addEventListener("click", () => {
     playersScores.style.display = 'none'
     scoreboard.style.display = 'grid'
     singlePlayer = true
-    resetGame()
+    resetGame(true)
 })
 
 twoPlayerBtn.addEventListener("click", () => {
@@ -182,7 +189,7 @@ twoPlayerBtn.addEventListener("click", () => {
     scoreboard.style.display = 'none'
     playersScores.style.display = 'grid'
     singlePlayer = false
-    resetGame()
+    resetGame(true)
 })
 
 playBtn.addEventListener("click", () => {

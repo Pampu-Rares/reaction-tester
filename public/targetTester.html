@@ -54,8 +54,31 @@
                 <span id="player-2-hits"></span>
                 <span id="player-2-time"></span>
             </div>
+            
+            <div id="leaderboard-container">
+                <span>Leaderboard</span>
+                <table id="leaderboard">
+                    
+                </table>
+            </div>
+        </div>
+        <dialog>
+            <div id="new-leaderboard-entry-container">
+                <button id="close-leaderboard-entry-container" class="close">X</button>
+                <h3>You have set a new record!</h3>
+                <label for="new-entry-name">
+                    Enter your name:
+                    <input type="text" maxlength="20" id="new-entry-name" placeholder="E.g: Ben Dover">
+                </label>
+                <p>Time: <span id="achieved-time-span"></span>s</p>
+                <p>Difficulty: <span id="difficulty-span"></span></p>
+                <p>Targets missed: <span id="targets-missed-record-span"></span>/20</p>
+                <button type="button" id="submit-leaderboard-entry">Submit</button>
+            <div>
+        </dialog>
         </div>
     </main>
+    <script src="scripts/leaderboardScripts/targetTesterLeaderboard.js"></script>
     <script src="scripts/targetTesterScript.js"></script>
 </body>
 </html>
