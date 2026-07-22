@@ -57,7 +57,7 @@ function resetGame(isFullReset = false) {
         playBtn.innerText = 'Play'
         if(!isFullReset) {
             const difficultyToInt = targetDifficulty === 'easy-difficulty' ? 1 : targetDifficulty === 'medium-difficulty' ? 2 : 3
-            askForLeaderboardEntry(((endTime - startTime) / 1000).toFixed(3), targetsMissedSpan.innerText, difficultyToInt)
+            askForLeaderboardEntry(((endTime - startTime) / 1000).toFixed(3), difficultyToInt, targetsMissedSpan.innerText)
         }
     } 
     targetsMissedSpan.innerText = '0'

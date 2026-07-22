@@ -31,7 +31,6 @@ async function getLeaderboard() {
         leaderboardEntries = await fetch('/targetTester/')
         leaderboardEntries = await leaderboardEntries.json()
         leaderboardEntries = leaderboardEntries.leaderboard
-        console.log(leaderboardEntries)
         leaderboardEntries.forEach((position, index) => {
         htmlTableString += `
         <tr>
@@ -111,7 +110,8 @@ function askForLeaderboardEntry(time, difficulty, missed) {
 }
 
 function getKeyByValue(object, value) {
-    // need to add the logic
+    return Object.keys(object).find(key =>
+        object[key] === value);
 }
 
 submitEntryBtn.addEventListener("click", enterEntry)
